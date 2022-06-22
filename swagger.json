@@ -77,7 +77,7 @@
     },
     "/recipes/keywords": {
       "get": {
-        "description": "Returns recipes that match any one of the key words you specify",
+        "description": "Returns recipes that match any of the key words you specify",
         "parameters": [
           {
             "name": "keywords",
