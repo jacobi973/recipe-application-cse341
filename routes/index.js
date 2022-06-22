@@ -1,4 +1,5 @@
 const routes = require('express').Router();
+const recipeRoutes = require('./recipe-routes.js');
 
 const authCheck = (req, res, next) => {
   if (!req.user) {
@@ -15,7 +16,10 @@ routes.get('/', authCheck, (req, res) => {
 
 });
 
-routes.use('/recipe', require('../controller/recipe'));
-routes.use('/review', require('../controller/review'));
-routes.use('/list', require('../controller/list'));
+routes.use('/recipes', recipeRoutes);
+
+// routes.use('/recipe', require('../controller/recipe'));
+// routes.use('/review', require('../controller/review'));
+// routes.use('/list', require('../controller/list'));
+
 module.exports = routes;
