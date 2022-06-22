@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     instructions: req.body.instructions,
     imageLink: req.body.imageLink,
     date: req.body.date,
-    userPosted: req.body.userPoster,
+    userPosted: req.body.userPosted,
     keyWords: req.body.keyWords
   });
 
@@ -80,7 +80,13 @@ exports.findByKeyWords = (req, res) => {
         message: 'A valid key word is needed to retrive recipes'
       });
     } else {
-      const keyWords = req.query.keywords;
+      let keyWords = req.query.keywords;
+      
+      //swagger sends keywords as a string so I have to put it into an array
+      if (!Array.isArray(keyWords)) {
+        keyWords = keyWords.split(",")
+      }
+
       const orArray = keyWords.map((searchValue) => {
         return {
             keyWords: searchValue,

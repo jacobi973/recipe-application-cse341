@@ -8,19 +8,19 @@
   "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "http"
+    "http", "https"
   ],
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "description": "Delivers home page",
         "parameters": [],
         "responses": {}
       }
     },
     "/recipes/": {
       "post": {
-        "description": "",
+        "description": "Add a new recipe to the recipe collection in mongodb",
         "parameters": [
           {
             "name": "body",
@@ -29,25 +29,22 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "example": "New Recipe!"
                 },
                 "ingredients": {
-                  "example": "any"
+                  "example": ["Sugar", "Flour", "Eggs"]
                 },
                 "instructions": {
-                  "example": "any"
+                  "example": ["Add everything together", "Bake at 350"]
                 },
                 "imageLink": {
-                  "example": "any"
+                  "example": "new-recipe.jpeg"
                 },
-                "date": {
-                  "example": "any"
-                },
-                "userPoster": {
-                  "example": "any"
+                "userPosted": {
+                  "example": "62b22dbe5361f5388a5c5d87"
                 },
                 "keyWords": {
-                  "example": "any"
+                  "example": ["sweet", "treat", "easy"]
                 }
               }
             }
@@ -66,7 +63,7 @@
         }
       },
       "get": {
-        "description": "",
+        "description": "Returns all recipes from the recipes collection in mongodb",
         "parameters": [],
         "responses": {
           "200": {
@@ -80,12 +77,13 @@
     },
     "/recipes/keywords": {
       "get": {
-        "description": "",
+        "description": "Returns recipes that match any of the key words you specify",
         "parameters": [
           {
             "name": "keywords",
             "in": "query",
-            "type": "string"
+            "type": "array",
+            "collectionFormat": "multi"
           }
         ],
         "responses": {
@@ -106,7 +104,7 @@
     },
     "/recipes/userPosted/{userPostedId}": {
       "get": {
-        "description": "",
+        "description": "Returns all recipes created by a specific user. Enter the user's ID",
         "parameters": [
           {
             "name": "userPostedId",
@@ -133,7 +131,7 @@
     },
     "/recipes/{recipe_id}": {
       "get": {
-        "description": "",
+        "description": "Returns only one recipe specified by recipe ID",
         "parameters": [
           {
             "name": "recipe_id",
@@ -160,7 +158,7 @@
     },
     "/recipes/{id}": {
       "put": {
-        "description": "",
+        "description": "Updates one recipe with the ID specified",
         "parameters": [
           {
             "name": "id",
@@ -188,7 +186,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Deletes one recipe with the ID specified",
         "parameters": [
           {
             "name": "id",
@@ -215,7 +213,7 @@
     },
     "/reviews/{recipe_id}/{user_id}": {
       "post": {
-        "description": "",
+        "description": "Create a new review with a pre-existing recipe_id and user_id",
         "parameters": [
           {
             "name": "recipe_id",
@@ -236,10 +234,10 @@
               "type": "object",
               "properties": {
                 "review": {
-                  "example": "any"
+                  "example": "Great food!"
                 },
                 "rating": {
-                  "example": "any"
+                  "example": "5"
                 }
               }
             }
