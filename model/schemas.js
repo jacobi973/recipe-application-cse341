@@ -30,7 +30,7 @@ const reviews = new mongoose.Schema({
         required: true
     },
     rating: {
-        type: Number,
+        type: String,
         required: true
     }
 }, {
