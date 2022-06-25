@@ -5,10 +5,10 @@
     "title": "Recipe API",
     "description": "Recipes with reviews and shopping lists"
   },
-  "host": "localhost:3000",
+  "host": "recipe-application-group.herokuapp.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/": {
