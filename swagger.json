@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "title": "Recipe API",
+    "description": "Recipes with reviews and shopping lists"
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -20,7 +20,7 @@
     },
     "/recipes/": {
       "post": {
-        "description": "",
+        "description": "Add a recipe to the database",
         "parameters": [
           {
             "name": "body",
@@ -29,25 +29,39 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "example": "PB&J"
                 },
                 "ingredients": {
-                  "example": "any"
+                  "example": [
+                    "1 Tbs peanut butter",
+                    "1 Tbs jam/jelly (your choice of flavor)",
+                    "2 slices of bread"
+                  ]
                 },
                 "instructions": {
-                  "example": "any"
+                  "example": [
+                    "Spread peanut butter on one slice of bread.",
+                    "Spread jam/jelly on 2nd slice.",
+                    "Put slices together, peanut butter and jam on the inside.",
+                    "Serve with a cold glass of milk."
+                  ]
                 },
                 "imageLink": {
-                  "example": "any"
+                  "example": "https://unsplash.com/s/photos/sandwich"
                 },
                 "date": {
-                  "example": "any"
+                  "example": "2022-06-21T00:00:00.000+00:00"
                 },
                 "userPosted": {
                   "example": "any"
                 },
                 "keyWords": {
-                  "example": "any"
+                  "example": [
+                    "peanut butter",
+                    "jam",
+                    "jelly",
+                    "sandwich"
+                  ]
                 }
               }
             }
@@ -66,7 +80,7 @@
         }
       },
       "get": {
-        "description": "",
+        "description": "Retrieve all recipes",
         "parameters": [],
         "responses": {
           "200": {
@@ -80,7 +94,7 @@
     },
     "/recipes/keywords": {
       "get": {
-        "description": "",
+        "description": "Retrieve recipes using keyword(s)",
         "parameters": [
           {
             "name": "keywords",
@@ -106,7 +120,7 @@
     },
     "/recipes/userPosted/{userPostedId}": {
       "get": {
-        "description": "",
+        "description": "Retrieve recipes posted by specified user",
         "parameters": [
           {
             "name": "userPostedId",
@@ -133,7 +147,7 @@
     },
     "/recipes/{recipe_id}": {
       "get": {
-        "description": "",
+        "description": "Retrieve recipe by recipe ID",
         "parameters": [
           {
             "name": "recipe_id",
@@ -160,7 +174,7 @@
     },
     "/recipes/{id}": {
       "put": {
-        "description": "",
+        "description": "Edit recipe with matching ID",
         "parameters": [
           {
             "name": "id",
@@ -188,7 +202,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete recipe with matching ID",
         "parameters": [
           {
             "name": "id",
@@ -224,10 +238,12 @@
             "type": "string"
           },
           {
-            "name": "user_id",
-            "in": "path",
+            "name": "username",
+            "in": "query",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "enum": [ "Jacob", "Cameron", "Talitha", "Terri"],
+            "description": "Choose a user"
           },
           {
             "name": "body",

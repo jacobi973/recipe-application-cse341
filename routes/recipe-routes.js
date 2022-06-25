@@ -1,5 +1,5 @@
 const routes = require('express').Router();
-const recipes = require('../controller/recipe.js');
+const recipes = require('../controller/recipe');
 const validation = require('../validation');
 
 // Create a new recipe
