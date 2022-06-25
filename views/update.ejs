@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Account Deleted</title>
+    <title>Account Upated</title>
     <style>
         body {
             font-family: arial;
@@ -51,36 +51,62 @@
             padding: 10px;
             background: #ff5353;
         }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #form {
+            background: #58ed8c;
+            padding: 25px;
+            margin: 150px 0;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        }
+
+        h1 {
+            display: block;
+            font-size: 30px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 80%;
+            border: 1px solid #ccc;
+            background: #FFF;
+            margin: 0 0 5px;
+            padding: 10px;
+        }
     </style>
 </head>
 
 <body>
     <nav>
         <ul>
-            <% if (user) { %>
             <li><a href="/auth/logout">Log out</a></li>
             <li><a href="/api-docs">API Docs</a></li>
             <li><a href="/user/delete">Delete Account</a></li>
             <li><a href="/user/update">Update Account</a></li>
-            <% } %>
             <li><a href="/">Homepage</a></li>
         </ul>
     </nav>
-    <header>
-        <h1>Update Account?</h1>
-    </header>
-    <form id='form' method="POST" action="/user/updateUser">
-        <p>Change Username:</p>
-        <input id='textField' type='text' name='username' placeholder="<%= user.username %>">
-        <p>Change Date of birth:</p>
-        <div class='dob'>
-            <input type="text" placeholder="<%= user.dob %>"
-            onfocus="(this.type='date')"
-            onblur="(this.type='text')"
-            name="dob">
-        </div>
-        <input id='btn' type='submit'>
-    </form>
+    <div class="container">
+        <form id='form' method="POST" action="/user/updateUser">
+            <h1>Update Account?</h1>
+            <p>Change Username:</p>
+            <input id='textField' type='text' name='username' value="<%= user.username %>">
+            <p>Change Date of birth:</p>
+            <div class='dob'>
+                <input type="text" value="<%= user.dob %>" onfocus="(this.type='date')"
+                    onblur="(this.type='text')" name="dob">
+            </div>
+            <input id='btn' type='submit'>
+        </form>
+    </div>
 </body>
 
 </html>

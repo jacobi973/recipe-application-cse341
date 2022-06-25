@@ -1,11 +1,24 @@
 const user = require('../controller/user.js');
 const routes = require('express').Router();
 
-routes.get("/delete", user.delete);
+routes.get("/delete", function(req, res, next){
+  if (!req.user) {
+      res.redirect('/auth/home');
+    } else {
+      next();
+    }
+}, user.delete);
 
 routes.get("/update", (req, res) => {
-    res.render('update', { user: req.user })
-  });
+  if (!req.user) {
+    res.redirect('/auth/home');
+  } else {
+    res.render('update', {
+      user: req.user,
+      message: null
+    })
+  }
+});
 
 routes.post("/updateUser", user.update);
 

@@ -46,7 +46,7 @@ app.use(bodyParser.urlencoded({
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes);
 app.use('/', require('./routes/index'));
-app.use('/api-docs',   function(req, res, next){
+app.use('/api-docs', function(req, res, next){
     if (!req.user) {
         res.redirect('/auth/home');
       } else {
