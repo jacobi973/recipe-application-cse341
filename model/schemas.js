@@ -50,7 +50,8 @@ const List = mongoose.model('list', list)
 const userSchema = new mongoose.Schema({
     username: String,
     googleId: String,
-    thumbnail: String
+    thumbnail: String,
+    dob: String
 }, {
     collection: 'users'
 });

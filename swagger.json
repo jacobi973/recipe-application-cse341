@@ -213,18 +213,12 @@
         }
       }
     },
-    "/reviews/{recipe_id}/{user_id}": {
+    "/reviews/{recipe_id}": {
       "post": {
         "description": "",
         "parameters": [
           {
             "name": "recipe_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "user_id",
             "in": "path",
             "required": true,
             "type": "string"
