@@ -2,13 +2,38 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Recipe API",
-    "description": "Recipes with reviews and shopping lists"
+    "title": "Recipe and Shopping List API",
+    "description": "Recipe database with reviews and shopping list"
   },
-  "host": "recipe-application-group.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Recipes",
+      "description": "Recipe database"
+    },
+    {
+      "name": "Reviews",
+      "description": "Reviews of recipes"
+    },
+    {
+      "name": "List",
+      "description": "Shopping list for recipes"
+    },
+    {
+      "name": "User",
+      "description": "Registered users"
+    }
+  ],
   "schemes": [
+    "http",
     "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
   ],
   "paths": {
     "/": {
@@ -20,7 +45,10 @@
     },
     "/recipes/": {
       "post": {
-        "description": "Add a recipe to the database",
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -29,39 +57,25 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "PB&J"
+                  "example": "any"
                 },
                 "ingredients": {
-                  "example": [
-                    "1 Tbs peanut butter",
-                    "1 Tbs jam/jelly (your choice of flavor)",
-                    "2 slices of bread"
-                  ]
+                  "example": "any"
                 },
                 "instructions": {
-                  "example": [
-                    "Spread peanut butter on one slice of bread.",
-                    "Spread jam/jelly on 2nd slice.",
-                    "Put slices together, peanut butter and jam on the inside.",
-                    "Serve with a cold glass of milk."
-                  ]
+                  "example": "any"
                 },
                 "imageLink": {
-                  "example": "https://unsplash.com/s/photos/sandwich"
+                  "example": "any"
                 },
                 "date": {
-                  "example": "2022-06-21T00:00:00.000+00:00"
+                  "example": "any"
                 },
                 "userPosted": {
                   "example": "any"
                 },
                 "keyWords": {
-                  "example": [
-                    "peanut butter",
-                    "jam",
-                    "jelly",
-                    "sandwich"
-                  ]
+                  "example": "any"
                 }
               }
             }
@@ -80,7 +94,10 @@
         }
       },
       "get": {
-        "description": "Retrieve all recipes",
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
         "parameters": [],
         "responses": {
           "200": {
@@ -94,7 +111,10 @@
     },
     "/recipes/keywords": {
       "get": {
-        "description": "Retrieve recipes using keyword(s)",
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "keywords",
@@ -120,7 +140,10 @@
     },
     "/recipes/userPosted/{userPostedId}": {
       "get": {
-        "description": "Retrieve recipes posted by specified user",
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "userPostedId",
@@ -147,7 +170,10 @@
     },
     "/recipes/{recipe_id}": {
       "get": {
-        "description": "Retrieve recipe by recipe ID",
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "recipe_id",
@@ -174,7 +200,10 @@
     },
     "/recipes/{id}": {
       "put": {
-        "description": "Edit recipe with matching ID",
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -202,7 +231,10 @@
         }
       },
       "delete": {
-        "description": "Delete recipe with matching ID",
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -229,7 +261,10 @@
     },
     "/reviews/{recipe_id}/{user_id}": {
       "post": {
-        "description": "",
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Add a review",
         "parameters": [
           {
             "name": "recipe_id",
@@ -238,12 +273,10 @@
             "type": "string"
           },
           {
-            "name": "username",
-            "in": "query",
+            "name": "user_id",
+            "in": "path",
             "required": true,
-            "type": "string",
-            "enum": [ "Jacob", "Cameron", "Talitha", "Terri"],
-            "description": "Choose a user"
+            "type": "string"
           },
           {
             "name": "body",
@@ -276,8 +309,19 @@
     },
     "/reviews/": {
       "get": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Get all reviews",
+        "parameters": [
+          {
+            "name": "recipe_id",
+            "in": "path",
+            "description": "Input recipe ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
