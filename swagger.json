@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "jacob-recipe.herokuapp.com",
+  "host": "recipe-application-group.herokuapp.com",
   "basePath": "/",
   "tags": [
     {
