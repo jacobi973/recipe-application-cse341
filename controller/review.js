@@ -7,7 +7,7 @@ exports.create = (req, res) => {
     console.log(req.params.recipe_id)
     const review = new Review({
       recipeId: req.params.recipe_id,
-      userId: req.params.user_id,
+      userId: req.user.googleId,
       review: req.body.review,
       rating: req.body.rating
     });

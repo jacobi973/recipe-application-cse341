@@ -24,4 +24,6 @@ routes.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     res.redirect('/');
 });
 
+
+
 module.exports = routes;

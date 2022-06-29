@@ -6,6 +6,7 @@ const passport = require('passport');
 // eslint-disable-next-line no-unused-vars
 const passportSetup = require('./controller/user');
 const authRoutes = require('./routes/auth-routes');
+const userRoutes = require('./routes/user-routes');
 const swaggerDocument = require('./swagger.json');
 const sessions = require('express-session');
 const app = express();
@@ -42,9 +43,10 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 // set up routes
+app.use('/user', userRoutes)
 app.use('/auth', authRoutes);
 app.use('/', require('./routes/index'));
-app.use('/api-docs',   function(req, res, next){
+app.use('/api-docs', function(req, res, next){
     if (!req.user) {
         res.redirect('/auth/home');
       } else {

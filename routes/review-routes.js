@@ -3,7 +3,7 @@ const reviews = require('../controller/review.js');
 const validation = require('../validation');
 
 // Create a new recipe
-routes.post('/:recipe_id/:user_id', validation.addNewReview, reviews.create
+routes.post(`/:recipe_id`, validation.addNewReview, reviews.create
     // #swagger.tags = ['Reviews']
     // #swagger.description = 'Add a review'
 );
