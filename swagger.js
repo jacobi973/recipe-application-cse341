@@ -6,7 +6,7 @@ const doc = {
         title: "Recipe and Shopping List API",
         description: "Recipe database with reviews and shopping list"
     }, 
-    host: "localhost:3000",
+    host: `${process.argv.splice(2)}`,
     basePath: "/",
     schemes: ["http", "https"],
     consumes: ["application/json"],
