@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "swaggerProd": "node ./swagger.js localhost:3000",
-    "swaggerDev": "node ./swagger.js jacob-recipe.herokuapp.com"
+    "swaggerDev": "node ./swagger.js recipe-application-group.herokuapp.com/"
   },
   "repository": {
     "type": "git",

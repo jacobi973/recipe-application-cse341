@@ -12,6 +12,11 @@ routes.get('/keywords', recipes.findByKeyWords
     // #swagger.tags = ['Recipes']
 );
 
+// Retrieve all recipes by ingredients
+routes.get('/ingredients', recipes.findByIngredients
+    // #swagger.tags = ['Recipes']
+);
+
 // Retrieve all recipes by user posted
 routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
     // #swagger.tags = ['Recipes']
