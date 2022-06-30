@@ -91,3 +91,18 @@ exports.delete = (req, res, next) => {
         });
     }
   };
+
+// Find a single Recipe with an id
+exports.findOne = (req, res) => {
+    const googleId= req.user.googleId;
+    User.find({ googleId: googleId })
+      .then((data) => {
+         res.send(data[0]);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: 'Error retrieving recipe with googleId =' + googleId
+        });
+        console.log(err);
+      });
+};
