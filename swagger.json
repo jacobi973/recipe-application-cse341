@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "recipe-application-group.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -36,13 +36,6 @@
     "application/json"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/recipes/": {
       "post": {
         "tags": [
@@ -352,6 +345,7 @@
         }
       }
     },
+<<<<<<< talitha2
     "/lists/": {
       "post": {
         "tags": [
@@ -416,10 +410,30 @@
           {
             "name": "user_id",
             "in": "path",
+=======
+    "/users/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "This method deletes a user. This is for documentation purposes only. All deletes will go through the frontend.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID.",
+>>>>>>> master
             "required": true,
             "type": "string"
           }
         ],
+<<<<<<< talitha2
         "responses": {
           "200": {
             "description": "OK"
@@ -511,16 +525,66 @@
             "type": "string"
           }
         ],
+=======
+        "responses": {}
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "This method updates user information. The current fields are: username, and dob. The new values are passed in the body of the request. This is for documentation purposes only. All updates will go through the frontend.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "User data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "user"
+                },
+                "dob": {
+                  "type": "string",
+                  "example": "1234"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/user/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [],
+>>>>>>> master
         "responses": {
           "200": {
             "description": "OK"
           },
+<<<<<<< talitha2
           "400": {
             "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
           },
+=======
+>>>>>>> master
           "500": {
             "description": "Internal Server Error"
           }

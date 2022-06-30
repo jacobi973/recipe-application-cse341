@@ -2,13 +2,21 @@ const routes = require('express').Router();
 const recipes = require('../controller/recipe');
 const validation = require('../validation');
 
+const authCheck = (req, res, next) => {
+    if (!req.user) {
+      res.redirect('/auth/home');
+    } else {
+      next();
+    }
+  };
+
 // Create a new recipe
-routes.post('/', validation.addNewRecipe, recipes.create
+routes.post('/',authCheck, validation.addNewRecipe, recipes.create
     // #swagger.tags = ['Recipes']
 );
 
 // Retrieve all recipes by key words
-routes.get('/keywords', recipes.findByKeyWords
+routes.get('/keywords', authCheck, recipes.findByKeyWords
     // #swagger.tags = ['Recipes']
 );
 
@@ -18,27 +26,27 @@ routes.get('/ingredients', recipes.findByIngredients
 );
 
 // Retrieve all recipes by user posted
-routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
+routes.get('/userPosted/:userPostedId', authCheck, recipes.findByUserPosted
     // #swagger.tags = ['Recipes']
 );
 
 // Retrieve a single recipe with id
-routes.get('/:recipe_id', recipes.findOne
+routes.get('/:recipe_id', authCheck, recipes.findOne
     // #swagger.tags = ['Recipes']
 );
 
 // Retrive all recipes in database
-routes.get('/', recipes.findAll
+routes.get('/', authCheck, recipes.findAll
     // #swagger.tags = ['Recipes']
 );
 
 // Update a recipe with id
-routes.put('/:id', validation.updateOneRecipe, recipes.update
+routes.put('/:id', authCheck, validation.updateOneRecipe, recipes.update
     // #swagger.tags = ['Recipes']
 );
 
 // Delete a recipe with id
-routes.delete('/:id', recipes.delete
+routes.delete('/:id', authCheck, recipes.delete
     // #swagger.tags = ['Recipes']
 );
 
