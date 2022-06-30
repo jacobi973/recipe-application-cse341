@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "localhost:3000",
+  "host": "recipe-application-group.herokuapp.com",
   "basePath": "/",
   "tags": [
     {
@@ -53,10 +53,10 @@
                   "example": "any"
                 },
                 "ingredients": {
-                  "example": ["any"]
+                  "example": "any"
                 },
                 "instructions": {
-                  "example": ["any"]
+                  "example": "any"
                 },
                 "imageLink": {
                   "example": "any"
@@ -65,7 +65,7 @@
                   "example": "any"
                 },
                 "keyWords": {
-                  "example": ["any"]
+                  "example": "any"
                 }
               }
             }
@@ -109,7 +109,7 @@
           {
             "name": "keywords",
             "in": "query",
-            "type": "array"
+            "type": "string"
           }
         ],
         "responses": {
@@ -138,7 +138,7 @@
           {
             "name": "ingredients",
             "in": "query",
-            "type": "array"
+            "type": "string"
           }
         ],
         "responses": {
@@ -345,7 +345,6 @@
         }
       }
     },
-<<<<<<< talitha2
     "/lists/": {
       "post": {
         "tags": [
@@ -363,7 +362,7 @@
                   "example": "any"
                 },
                 "items": {
-                  "example": ["any"]
+                  "example": "any"
                 },
                 "userId": {
                   "example": "any"
@@ -410,30 +409,10 @@
           {
             "name": "user_id",
             "in": "path",
-=======
-    "/users/{id}": {
-      "delete": {
-        "tags": [
-          "User"
-        ],
-        "description": "This method deletes a user. This is for documentation purposes only. All deletes will go through the frontend.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "User ID.",
->>>>>>> master
             "required": true,
             "type": "string"
           }
         ],
-<<<<<<< talitha2
         "responses": {
           "200": {
             "description": "OK"
@@ -525,7 +504,43 @@
             "type": "string"
           }
         ],
-=======
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "This method deletes a user. This is for documentation purposes only. All deletes will go through the frontend.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID.",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {}
       },
       "post": {
@@ -571,20 +586,10 @@
         ],
         "description": "",
         "parameters": [],
->>>>>>> master
         "responses": {
           "200": {
             "description": "OK"
           },
-<<<<<<< talitha2
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-=======
->>>>>>> master
           "500": {
             "description": "Internal Server Error"
           }
