@@ -1,5 +1,6 @@
 const validator = require('./validate');
 
+//validation for creating a new recipe
 const addNewRecipe = (req, res, next) => {
   const validationRule = {
     name: 'required|string',
@@ -22,12 +23,13 @@ const addNewRecipe = (req, res, next) => {
   });
 };
 
+//validation for updating a recipe
 const updateOneRecipe = (req, res, next) => {
   const validationRule = {
     name: 'string',
     ingredients: 'array',
     instructions: 'array',
-    imageLink: 'array',
+    imageLink: 'string',
     userPosted: 'string',
     keywords: 'array'
   };
@@ -43,6 +45,48 @@ const updateOneRecipe = (req, res, next) => {
     }
   });
 };
+
+//validation for creating a new list
+const addNewList = (req, res, next) => {
+  const validationRule = {
+    title: 'required|string',
+    items: 'required|array',
+    userId: 'required|string'
+  };
+  validator(req.body, validationRule, {}, (err, status) => {
+    if (!status) {
+      res.status(412).send({
+        success: false,
+        message: 'Validation failed',
+        data: err
+      });
+    } else {
+      next();
+    }
+  });
+};
+
+//validation for updating a list
+const updateOneList = (req, res, next) => {
+  const validationRule = {
+    title: 'string',
+    items: 'array',
+    userId: 'string'
+  };
+  validator(req.body, validationRule, {}, (err, status) => {
+    if (!status) {
+      res.status(412).send({
+        success: false,
+        message: 'Validation failed',
+        data: err
+      });
+    } else {
+      next();
+    }
+  });
+};
+
+//validation for creating a new review
 const addNewReview = (req, res, next) => {
   const validationRule = {
     recipeId: 'string',
@@ -62,8 +106,11 @@ const addNewReview = (req, res, next) => {
     }
   });
 };
+
 module.exports = {
   addNewReview,
   addNewRecipe,
-  updateOneRecipe
+  updateOneRecipe,
+  addNewList,
+  updateOneList
 };

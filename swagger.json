@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -36,13 +36,6 @@
     "application/json"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/recipes/": {
       "post": {
         "tags": [
@@ -94,7 +87,7 @@
                   "type": "string",
                   "example": "62b0d6fc3620510a74d6ecba"
                 },
-                "keyWords": {
+                "keywords": {
                   "type": "array",
                   "example": [
                     "cream cheese",
@@ -111,7 +104,7 @@
                 "instructions",
                 "imageLink",
                 "userPosted",
-                "keyWords"
+                "keywords"
               ]
             }
           }
@@ -160,30 +153,12 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Find a recipe using keyword",
         "description": "",
         "parameters": [
           {
-            "name": "keywords",
+            "name": "keyWords",
             "in": "query",
             "type": "string"
-          },
-          {
-            "name": "obj",
-            "in": "body",
-            "description": "Use keyword to find recipe",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "keyWords": {
-                  "type": "string",
-                  "example": "cookie"
-                }
-              },
-              "required": [
-                "keyWords"
-              ]
-            }
           }
         ],
         "responses": {
@@ -262,12 +237,41 @@
         }
       }
     },
+    "/recipes/ingredients": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "ingredients",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/recipes/{id}": {
       "put": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Get recipe using ID",
+        "summary": "Update recipe using ID",
         "description": "",
         "parameters": [
           {
@@ -279,10 +283,67 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Use ID to find recipe",
+            "description": "Make updates to recipe using recipe ID",
+            "example": "62b7adea95fbc1ad13b8f808",
             "schema": {
               "type": "object",
-              "properties": {}
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Pizza Pie"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "example": [
+                    "pizza crust",
+                    "cheese",
+                    "sauce",
+                    "pepperoni"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "instructions": {
+                  "type": "array",
+                  "example": [
+                    "Spread sauce on crust",
+                    "Sprinkle cheese on top",
+                    "Top with pepperoni",
+                    "Bake at 400F for 12 min"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "imageLink": {
+                  "type": "string",
+                  "example": "https://unsplash.com/photos/MQUqbmszGGM"
+                },
+                "userPosted": {
+                  "type": "string",
+                  "example": "104358594858321533678"
+                },
+                "keyWords": {
+                  "type": "array",
+                  "example": [
+                    "pizza",
+                    "cheese",
+                    "pepperoni"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "ingredients",
+                "instructions",
+                "imageLink",
+                "userPosted",
+                "keyWords"
+              ]
             }
           }
         ],
@@ -333,18 +394,15 @@
         }
       }
     },
-    "/reviews/{recipe_id}/{user_id}": {
+    "/reviews/{recipe_id}": {
       "post": {
-        "description": "",
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Add a review",
         "parameters": [
           {
             "name": "recipe_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "user_id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -380,6 +438,295 @@
     },
     "/reviews/": {
       "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Get all reviews",
+        "parameters": [
+          {
+            "name": "recipe_id",
+            "in": "path",
+            "description": "Input recipe ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/lists/": {
+      "post": {
+        "tags": [
+          "List"
+        ],
+        "summary": "Make a new shopping list",
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Allows user to create new shopping list",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Grocery List 1"
+                },
+                "items": {
+                  "type": "array",
+                  "example": [
+                    "bread",
+                    "milk",
+                    "butter",
+                    "sugar"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "title",
+                "items"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "List"
+        ],
+        "summary": "Get all shopping lists for everyone",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/lists/user/{user_id}": {
+      "get": {
+        "tags": [
+          "List"
+        ],
+        "summary": "Get all lists created by user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Allows user to retrieve all shopping lists belonging to him/her",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/lists/{list_id}": {
+      "get": {
+        "tags": [
+          "List"
+        ],
+        "summary": "Retrieve single list by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "list_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/lists/{id}": {
+      "put": {
+        "tags": [
+          "List"
+        ],
+        "summary": "Update shopping list by list ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "List"
+        ],
+        "summary": "Delete shopping list by list ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "This method deletes a user. This is for documentation purposes only. All deletes will go through the frontend.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "This method updates user information. The current fields are: username, and dob. The new values are passed in the body of the request. This is for documentation purposes only. All updates will go through the frontend.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "User data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "user"
+                },
+                "dob": {
+                  "type": "string",
+                  "example": "1234"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/user/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
         "description": "",
         "parameters": [],
         "responses": {

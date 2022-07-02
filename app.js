@@ -6,6 +6,7 @@ const passport = require('passport');
 // eslint-disable-next-line no-unused-vars
 const passportSetup = require('./controller/user');
 const authRoutes = require('./routes/auth-routes');
+// const userRoutes = require('./routes/user-routes');
 const swaggerDocument = require('./swagger.json');
 const sessions = require('express-session');
 const app = express();
@@ -15,6 +16,9 @@ const authCheck = require('./routes/index');
 require('dotenv').config();
 const port = process.env.PORT || 3000;
 
+  var options = {
+    customCssUrl: '/custom.css'
+  };
 
 // set view engine
 app.set('view engine', 'ejs');
@@ -44,14 +48,14 @@ app.use(bodyParser.urlencoded({
 // set up routes
 app.use('/auth', authRoutes);
 app.use('/', require('./routes/index'));
-app.use('/api-docs',   function(req, res, next){
+app.use('/api-docs', function(req, res, next){
     if (!req.user) {
         res.redirect('/auth/home');
       } else {
         next();
       }
-}, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use(express.static("public"));
+}, swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+app.use(express.static(__dirname + '/public'));
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`)

@@ -6,13 +6,12 @@ const ObjectId = require('mongodb').ObjectId;
 
 exports.create = (req, res) => {
   // Create a Recipe
-
   const recipe = new Recipe({
     name: req.body.name,
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
     imageLink: req.body.imageLink,
-    date: req.body.date,
+    date: Date.now(),
     userPosted: req.body.userPosted,
     keyWords: req.body.keyWords
   });
@@ -41,7 +40,7 @@ exports.findAll = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving events.'
+          message: err.message || 'Some error occurred while retrieving recipes.'
         });
       });
   };
@@ -71,16 +70,16 @@ exports.findOne = (req, res) => {
   };
 
 //Find by key words
-//http://localhost:3000/recipes/keywords/?keywords[]=mash
-//http://localhost:3000/recipes/keywords/?keywords[]=cookie 
-//http://localhost:3000/recipes/keywords/?keywords[]=mash&keywords[]=cookie
-exports.findByKeyWords = (req, res) => {
-    if (!req.query.keywords) {
+//http://localhost:3000/recipes/keyWords/?keyWords[]=mash
+//http://localhost:3000/recipes/keyWords/?keyWords[]=cookie 
+//http://localhost:3000/recipes/keyWords/?keyWords[]=mash&keyWords[]=cookie
+exports.findByKeywords = (req, res) => {
+    if (!req.query.keyWords) {
       res.status(400).json({
         message: 'A valid key word is needed to retrive recipes'
       });
     } else {
-      let keyWords = req.query.keywords;
+      let keyWords = req.query.keyWords;
       
       //swagger sends keywords as a string so I have to put it into an array
       if (!Array.isArray(keyWords)) {
@@ -112,6 +111,43 @@ exports.findByKeyWords = (req, res) => {
     }
   };
 
+  //http://localhost:3000/recipes/ingredients/?ingredients[]=salt&ingredients[]=jelly
+  exports.findByIngredients = (req, res) => {
+    if (!req.query.ingredients) {
+      res.status(400).json({
+        message: 'Valid ingredient(s) is needed to retrive recipes'
+      });
+    } else {
+      let ingredients = req.query.ingredients;
+      
+      //swagger sends ingredients as a string so I have to put it into an array
+      if (!Array.isArray(ingredients)) {
+        ingredients = ingredients.split(",")
+      }
+
+      const orArray = ingredients.map((searchValue) => {
+        return {
+            ingredients: { $regex: searchValue, $options: "i" }
+        }
+      });
+      Recipe.aggregate([{
+        $match: { $or: orArray }
+      }])
+        .then((data) => {
+          if (!data) {
+            res.status(404).send({ message: `Not found. Recipe with ingredient(s) ${ingredients}. Try checking your spelling` });
+          } else {
+            res.send(data);
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: `Error retrieving recipe with ingredient(s) ${ingredients}`
+          });
+          console.log(err);
+        });
+    }
+  };
 
 
 // Find all recipes a specific user posted based on their id 

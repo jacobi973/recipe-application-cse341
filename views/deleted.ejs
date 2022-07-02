@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Homepage</title>
+        <title>Account Deleted</title>
         <style>
             body{
                 font-family: arial;
@@ -48,30 +48,11 @@
     <body>
         <nav>
             <ul>
-                <% if (user) { %>
-                <li><a href="/auth/logout">Log out</a></li>
-                <li><a href="/api-docs">API Docs</a></li>
-                <li><a href="/user/delete">Delete Account</a></li>
-                <li><a href="/user/update">Update Account</a></li>
                 <li><a href="/">Homepage</a></li>
-                <% } %>
             </ul>
         </nav>
-        <% if (!user) { %>
         <header>
-            <h1>Login using</h1>
+            <h1>Account Deleted</h1>
         </header>
-        <main>
-            <a class="google-btn" href="/auth/google">Google+</a>
-        </main>
-        <% } else { %>
-        <header>
-            <h1>Welcome <%= user.username %></h1>
-        </header>
-        <main>
-            <p>You are logged in!</p>
-            <p>Check out these API docs <a href="/api-docs">API Docs</a></p>
-        </main>
-        <% } %>
     </body>
 </html>

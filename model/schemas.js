@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Recipe schema
 const recipe = new mongoose.Schema({
     name: {
         type: String,
@@ -8,7 +9,10 @@ const recipe = new mongoose.Schema({
     ingredients: [String],
     instructions: [String],
     imageLink: String,
-    date: Date,
+    date: {
+        type: Date,
+        default: Date.now()
+    },
     userPosted: String,
     keyWords: [String]
 }, {
@@ -16,6 +20,25 @@ const recipe = new mongoose.Schema({
 });
 const Recipe = mongoose.model('recipe', recipe)
 
+// List schema
+const list = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    items: [String],
+    date: {
+        type: Date,
+        default: Date.now()
+    },
+    userId: String
+}, {
+    collection: 'list'
+});
+const List = mongoose.model('list', list)
+
+
+// Reviews schema
 const reviews = new mongoose.Schema({
     recipeId: {
         type: String,
@@ -38,19 +61,12 @@ const reviews = new mongoose.Schema({
 });
 const Reviews = mongoose.model('reviews', reviews)
 
-const list = new mongoose.Schema({
-
-}, {
-    collection: 'list'
-});
-const List = mongoose.model('list', list)
-
-
-
+// User schema
 const userSchema = new mongoose.Schema({
     username: String,
     googleId: String,
-    thumbnail: String
+    thumbnail: String,
+    dob: String
 }, {
     collection: 'users'
 });
