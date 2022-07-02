@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "recipe-application-group.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -41,33 +41,71 @@
         "tags": [
           "Recipes"
         ],
+        "summary": "Add a recipe to the database",
         "description": "",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Submit a recipe",
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Cherry Cheesecake"
                 },
                 "ingredients": {
-                  "example": "any"
+                  "type": "array",
+                  "example": [
+                    "1 lb cream cheese",
+                    "1 cup sugar",
+                    "2 eggs",
+                    "1 can cherry pie filling"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "instructions": {
-                  "example": "any"
+                  "type": "array",
+                  "example": [
+                    "Beat cream cheese and sugar together until smooth",
+                    "Beat in eggs until smooth",
+                    "Bake at 350F for 45 minutes",
+                    "Spread cherry filling on top"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "imageLink": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "https://unsplash.com/photos/_BBTqanOrBI"
                 },
                 "userPosted": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "62b0d6fc3620510a74d6ecba"
                 },
-                "keyWords": {
-                  "example": "any"
+                "keywords": {
+                  "type": "array",
+                  "example": [
+                    "cream cheese",
+                    "cherry"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
-              }
+              },
+              "required": [
+                "name",
+                "ingredients",
+                "instructions",
+                "imageLink",
+                "userPosted",
+                "keywords"
+              ]
             }
           }
         ],
@@ -87,8 +125,19 @@
         "tags": [
           "Recipes"
         ],
+        "summary": "Get all recipes from database",
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Retrieve all recipes",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -107,7 +156,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "keywords",
+            "name": "keyWords",
             "in": "query",
             "type": "string"
           }
@@ -217,11 +266,41 @@
         }
       }
     },
+    "/recipes/ingredients": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "ingredients",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/recipes/{id}": {
       "put": {
         "tags": [
           "Recipes"
         ],
+        "summary": "Update recipe using ID",
         "description": "",
         "parameters": [
           {
@@ -229,6 +308,72 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Make updates to recipe using recipe ID",
+            "example": "62b7adea95fbc1ad13b8f808",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Pizza Pie"
+                },
+                "ingredients": {
+                  "type": "array",
+                  "example": [
+                    "pizza crust",
+                    "cheese",
+                    "sauce",
+                    "pepperoni"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "instructions": {
+                  "type": "array",
+                  "example": [
+                    "Spread sauce on crust",
+                    "Sprinkle cheese on top",
+                    "Top with pepperoni",
+                    "Bake at 400F for 12 min"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "imageLink": {
+                  "type": "string",
+                  "example": "https://unsplash.com/photos/MQUqbmszGGM"
+                },
+                "userPosted": {
+                  "type": "string",
+                  "example": "104358594858321533678"
+                },
+                "keyWords": {
+                  "type": "array",
+                  "example": [
+                    "pizza",
+                    "cheese",
+                    "pepperoni"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "ingredients",
+                "instructions",
+                "imageLink",
+                "userPosted",
+                "keyWords"
+              ]
+            }
           }
         ],
         "responses": {
@@ -350,24 +495,37 @@
         "tags": [
           "List"
         ],
+        "summary": "Make a new shopping list",
         "description": "",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Allows user to create new shopping list",
             "schema": {
               "type": "object",
               "properties": {
                 "title": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Grocery List 1"
                 },
                 "items": {
-                  "example": "any"
-                },
-                "userId": {
-                  "example": "any"
+                  "type": "array",
+                  "example": [
+                    "bread",
+                    "milk",
+                    "butter",
+                    "sugar"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
-              }
+              },
+              "required": [
+                "title",
+                "items"
+              ]
             }
           }
         ],
@@ -387,6 +545,7 @@
         "tags": [
           "List"
         ],
+        "summary": "Get all shopping lists for everyone",
         "description": "",
         "parameters": [],
         "responses": {
@@ -404,6 +563,7 @@
         "tags": [
           "List"
         ],
+        "summary": "Get all lists created by user",
         "description": "",
         "parameters": [
           {
@@ -411,6 +571,15 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Allows user to retrieve all shopping lists belonging to him/her",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
           }
         ],
         "responses": {
@@ -434,6 +603,7 @@
         "tags": [
           "List"
         ],
+        "summary": "Retrieve single list by ID",
         "description": "",
         "parameters": [
           {
@@ -464,6 +634,7 @@
         "tags": [
           "List"
         ],
+        "summary": "Update shopping list by list ID",
         "description": "",
         "parameters": [
           {
@@ -495,6 +666,7 @@
         "tags": [
           "List"
         ],
+        "summary": "Delete shopping list by list ID",
         "description": "",
         "parameters": [
           {

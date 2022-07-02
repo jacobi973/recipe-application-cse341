@@ -70,16 +70,16 @@ exports.findOne = (req, res) => {
   };
 
 //Find by key words
-//http://localhost:3000/recipes/keywords/?keywords[]=mash
-//http://localhost:3000/recipes/keywords/?keywords[]=cookie 
-//http://localhost:3000/recipes/keywords/?keywords[]=mash&keywords[]=cookie
-exports.findByKeyWords = (req, res) => {
-    if (!req.query.keywords) {
+//http://localhost:3000/recipes/keyWords/?keyWords[]=mash
+//http://localhost:3000/recipes/keyWords/?keyWords[]=cookie 
+//http://localhost:3000/recipes/keyWords/?keyWords[]=mash&keyWords[]=cookie
+exports.findByKeywords = (req, res) => {
+    if (!req.query.keyWords) {
       res.status(400).json({
         message: 'A valid key word is needed to retrive recipes'
       });
     } else {
-      let keyWords = req.query.keywords;
+      let keyWords = req.query.keyWords;
       
       //swagger sends keywords as a string so I have to put it into an array
       if (!Array.isArray(keyWords)) {
