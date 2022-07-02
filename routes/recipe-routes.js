@@ -30,7 +30,7 @@ routes.post('/',authCheck, validation.addNewRecipe, recipes.create
 );
 
 // Retrieve all recipes by key words
-routes.get('/keywords', recipes.findByKeyWords
+routes.get('/keyWords', recipes.findByKeywords
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Find a recipe using keyword'
     /* #swagger.parameters['obj'] = {
@@ -45,15 +45,24 @@ routes.get('/keywords', recipes.findByKeyWords
 // Retrieve all recipes by user posted
 routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
    // #swagger.tags = ['Recipes']
+   // #swagger.summary = 'Get recipes posted by certain user'
+   /* #swagger.parameters['obj'] = {
+    in: 'body',
+    description: 'Use user ID to retrieve recipes',
+    example: '100552395345978742943'
+   }*/
 );
 
 // Retrieve a single recipe with id
 routes.get('/:recipe_id', recipes.findOne
     // #swagger.tags = ['Recipes']
+    // #swagger.summary = 'Get recipe by recipe ID'
+    /* swagger.parameters
+    */
 );
 
 // Retrieve all recipes by key words
-routes.get('/keywords', authCheck, recipes.findByKeyWords
+routes.get('/keyWords', authCheck, recipes.findByKeywords
     // #swagger.tags = ['Recipes']
 );
 
@@ -84,10 +93,19 @@ routes.get('/', recipes.findAll
 // Update a recipe with id
 routes.put('/:id', validation.updateOneRecipe, recipes.update
     // #swagger.tags = ['Recipes']
-    // #swagger.summary = 'Get recipe using ID'
+    // #swagger.summary = 'Update recipe using ID'
     /* #swagger.parameters['obj'] = {
         in: 'body',
-        description: 'Use ID to find recipe'
+        description: 'Make updates to recipe using recipe ID',
+        example: '62b7adea95fbc1ad13b8f808', 
+        schema: {
+            $name: 'Pizza Pie',
+            $ingredients: ['pizza crust', 'cheese', 'sauce', 'pepperoni'],
+            $instructions: ['Spread sauce on crust', 'Sprinkle cheese on top', 'Top with pepperoni', 'Bake at 400F for 12 min'],
+            $imageLink: 'https://unsplash.com/photos/MQUqbmszGGM',
+            $userPosted: '104358594858321533678',
+            $keyWords: ['pizza', 'cheese', 'pepperoni']
+        }
     }*/
 );
 
