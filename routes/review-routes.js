@@ -33,10 +33,10 @@ routes.get('/', authCheck, reviews.findAll
     }*/
 );
 
-// Update a recipe with id
-//routes.put('/:id', validation.updateOneRecipe, recipes.update);
+// Update a review with id
+routes.put('/:id', validation.updateOneReview, reviews.update);
 
 // Delete a recipe with id
-//routes.delete('/:id', recipes.delete);
+routes.delete('/:id', reviews.delete);
 
 module.exports = routes;

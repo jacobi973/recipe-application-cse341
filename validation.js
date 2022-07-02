@@ -106,9 +106,30 @@ const addNewReview = (req, res, next) => {
     }
   });
 };
+//validation for updating a recipe
+const updateOneReview= (req, res, next) => {
+  const validationRule = {
+    recipeId: 'string',
+    userId: 'string',
+    review: 'required|string',
+    rating: 'required|string'
+  };
+  validator(req.body, validationRule, {}, (err, status) => {
+    if (!status) {
+      res.status(412).send({
+        success: false,
+        message: 'Validation failed',
+        data: err
+      });
+    } else {
+      next();
+    }
+  });
+};
 
 module.exports = {
   addNewReview,
+  updateOneReview,
   addNewRecipe,
   updateOneRecipe,
   addNewList,
