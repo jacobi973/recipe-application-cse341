@@ -1,0 +1,38 @@
+GET http://localhost:3000/recipes
+
+###
+
+GET http://localhost:3000/recipes/62b25438f507e8b500d4c1c4 HTTP/1.1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/recipes HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Scrambled Eggs",
+    "ingredients": [
+        "4 large eggs",
+        "1/4 cup half-n-half",
+        "1/4 tsp salt",
+        "1 Tbs butter"
+    ],
+    "instructions": [
+        "1. Whisk first 3 ingredients together",
+        "2. Melt butter in non-stick pan over medium heat",
+        "3. Add egg mixture and reduce heat to medium low",
+        "4. Stir/scrape with spatula until most egg is solid",
+        "5. Remove from heat and serve"
+    ],
+    "servings": 2,
+    "imageLink": "scrambled_eggs.jpg",
+    "keyWords": [
+        "eggs",
+        "easy",
+        "breakfast"
+    ],
+    "userPosted": "62b0d6fc3620510a74d6ecba"
+}
+
+###

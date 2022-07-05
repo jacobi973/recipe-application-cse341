@@ -4,8 +4,9 @@
   "description": "recipe-Application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon app.js",
+    "server": "nodemon server.js",
     "swaggerProd": "node ./swagger.js localhost:3000",
     "swaggerDev": "node ./swagger.js recipe-application-group.herokuapp.com"
   },
@@ -25,6 +26,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
+    "eslint-plugin-jest": "^26.5.3",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "mongodb": "^4.7.0",
@@ -36,8 +38,12 @@
     "validatorjs": "^3.22.1"
   },
   "devDependencies": {
+    "@types/jest": "^28.1.4",
+    "@types/supertest": "^2.0.12",
     "eslint": "^8.18.0",
+    "jest": "^28.1.2",
     "nodemon": "^2.0.16",
+    "supertest": "^6.2.4",
     "swagger-autogen": "^2.21.3"
   }
 }
