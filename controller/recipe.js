@@ -95,8 +95,8 @@ exports.findByKeywords = (req, res) => {
         $match: { $or: orArray }
       }])
         .then((data) => {
-          if (!data) {
-            res.status(404).send({ message: `Not found. Recipe with key word ${keyWords}. Try checking your spelling` });
+          if (!data || data.length === 0) {
+            res.status(404).send({ message: `Not found. Recipe with key word(s) ${keyWords}. Try checking your spelling or using different words` });
           } else {
             res.send(data);
             //res.render('recipes', { recipes: data, user: req.session.user });
