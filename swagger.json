@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "localhost:3000",
+  "host": "recipe-application-group.herokuapp.com",
   "basePath": "/",
   "tags": [
     {
@@ -87,7 +87,7 @@
                   "type": "string",
                   "example": "62b0d6fc3620510a74d6ecba"
                 },
-                "keywords": {
+                "keyWords": {
                   "type": "array",
                   "example": [
                     "cream cheese",
@@ -104,7 +104,7 @@
                 "instructions",
                 "imageLink",
                 "userPosted",
-                "keywords"
+                "keyWords"
               ]
             }
           }
@@ -148,7 +148,7 @@
         }
       }
     },
-    "/recipes/keywords": {
+    "/recipes/keyWords": {
       "get": {
         "tags": [
           "Recipes"
@@ -157,35 +157,6 @@
         "parameters": [
           {
             "name": "keyWords",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/recipes/ingredients": {
-      "get": {
-        "tags": [
-          "Recipes"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "ingredients",
             "in": "query",
             "type": "string"
           }
@@ -483,6 +454,64 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "put": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"

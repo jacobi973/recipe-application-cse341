@@ -34,9 +34,13 @@ routes.get('/', authCheck, reviews.findAll
 );
 
 // Update a review with id
-routes.put('/:id', validation.updateOneReview, reviews.update);
+routes.put('/:id', validation.updateOneReview, reviews.update,
+// #swagger.tags = ['Reviews']
+);
 
 // Delete a recipe with id
-routes.delete('/:id', reviews.delete);
+routes.delete('/:id', reviews.delete,
+// #swagger.tags = ['Reviews']
+);
 
 module.exports = routes;
