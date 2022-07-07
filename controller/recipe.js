@@ -50,7 +50,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     if (!ObjectId.isValid(req.params.recipe_id)) {
       res.status(400).json({
-        message: 'A valid id is needed to retrive a recipe '
+        message: 'A valid id is needed to retrive a recipe'
       });
     } else {
       const recipe_id = req.params.recipe_id;
@@ -134,7 +134,7 @@ exports.findByKeywords = (req, res) => {
         $match: { $or: orArray }
       }])
         .then((data) => {
-          if (!data) {
+          if (!data || data.length === 0) {
             res.status(404).send({ message: `Not found. Recipe with ingredient(s) ${ingredients}. Try checking your spelling` });
           } else {
             res.send(data);
@@ -154,7 +154,7 @@ exports.findByKeywords = (req, res) => {
 //http://localhost:3000/recipes/userPosted/62b0d6fc3620510a74d6ecba
 //http://localhost:3000/recipes/userPosted/62b22dbe5361f5388a5c5d87
 exports.findByUserPosted = (req, res) => {
-    if (!req.params.userPostedId) {
+    if (!ObjectId.isValid(req.params.userPostedId)) {
       res.status(400).json({
         message: 'A valid user id is needed to retrive recipes'
       });
@@ -162,7 +162,7 @@ exports.findByUserPosted = (req, res) => {
       const userPosted = req.params.userPostedId;
       Recipe.find({ userPosted: userPosted })
         .then((data) => {
-          if (!data) {
+          if (!data || data.length === 0) {
             res.status(404).send({ message: `Not found. Recipes posted by user with id  of ${userPosted}. Maybe user does not have any posts` });
           } else {
             res.send(data);
