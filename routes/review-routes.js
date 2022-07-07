@@ -22,9 +22,9 @@ routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
 //routes.get('/:recipe_id', recipes.findOne);
 
 // GET ALL REVIEWS
-routes.get('/', authCheck, reviews.findAll
+routes.get('/:recipe_id', authCheck, reviews.findReviewByRecipe
     // #swagger.tags = ['Reviews']
-    // #swagger.description = 'Get all reviews'
+    // #swagger.description = 'Get A Reviews for a Recipe'
     /* #swagger.parameters['recipe_id'] = {
         in: 'path',
         description: 'Input recipe ID',
@@ -34,9 +34,25 @@ routes.get('/', authCheck, reviews.findAll
 );
 
 // Update a review with id
-routes.put('/:id', validation.updateOneReview, reviews.update);
+routes.put('/:id', validation.updateOneReview, reviews.update
+// #swagger.tags = ['Reviews']
+    // #swagger.description = 'Update a Review'
+    /* #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'Input review ID',
+        required: true,
+        type: 'string'
+    }*/);
 
 // Delete a recipe with id
-routes.delete('/:id', reviews.delete);
+routes.delete('/:id', reviews.delete
+// #swagger.tags = ['Reviews']
+    // #swagger.description = 'Delete a review'
+    /* #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'Input review ID',
+        required: true,
+        type: 'string'
+    }*/);
 
 module.exports = routes;
