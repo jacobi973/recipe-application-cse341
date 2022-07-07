@@ -11,7 +11,8 @@ routes.post('/', validation.addNewList, list.create
         description: 'Allows user to create new shopping list',
         schema: {
             $title: 'Grocery List 1',
-            $items: ['bread', 'milk', 'butter', 'sugar']
+            $items: ['bread', 'milk', 'butter', 'sugar'],
+            $userId: '62b22dbe5361f5388a5c5d87'
         }
     }*/
 );
@@ -20,10 +21,6 @@ routes.post('/', validation.addNewList, list.create
 routes.get('/user/:user_id', list.findByUser
     // #swagger.tags = ['List']
     // #swagger.summary = 'Get all lists created by user'
-    /* #swagger.parameters['obj'] = {
-        in: 'body',
-        description: 'Allows user to retrieve all shopping lists belonging to him/her'
-    }*/
 );
 
 // Retrieve a single list with list id
@@ -42,6 +39,15 @@ routes.get('/', list.findAll
 routes.put('/:id', validation.updateOneList, list.update
     // #swagger.tags = ['List']
     // #swagger.summary = 'Update shopping list by list ID'
+    /* #swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'Allows user to update existing shopping list',
+        schema: {
+            $title: 'Updated Grocery List',
+            $items: ['bread', 'milk', 'butter', 'sugar', 'updated additional item'],
+            $userId: '62b22dbe5361f5388a5c5d87'
+        }
+    }*/
 );
 
 // Delete a list with id

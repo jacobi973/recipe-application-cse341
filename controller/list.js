@@ -30,7 +30,7 @@ exports.create = (req, res) => {
 
 
 exports.findByUser = (req, res) => {
-    if (!req.params.user_id) {
+    if (!ObjectId.isValid(req.params.user_id)) {
       res.status(400).json({
         message: 'A valid user id is needed to retrive lists'
       });
