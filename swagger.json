@@ -127,17 +127,6 @@
         ],
         "summary": "Get all recipes from database",
         "description": "",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "description": "Retrieve all recipes",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -153,6 +142,7 @@
         "tags": [
           "Recipes"
         ],
+        "summary": "Get all recipes that have specified keyword(s)",
         "description": "",
         "parameters": [
           {
@@ -182,6 +172,7 @@
         "tags": [
           "Recipes"
         ],
+        "summary": "Get all recipes posted by specific userId",
         "description": "",
         "parameters": [
           {
@@ -212,6 +203,7 @@
         "tags": [
           "Recipes"
         ],
+        "summary": "Get one recipe by recipe ID",
         "description": "",
         "parameters": [
           {
@@ -242,6 +234,7 @@
         "tags": [
           "Recipes"
         ],
+        "summary": "Get all recipes that have specified ingredient(s)",
         "description": "",
         "parameters": [
           {
@@ -271,7 +264,7 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Update recipe using ID",
+        "summary": "Update one recipe using recipe ID",
         "description": "",
         "parameters": [
           {
@@ -290,7 +283,7 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Pizza Pie"
+                  "example": "Updated Name Pizza Pie"
                 },
                 "ingredients": {
                   "type": "array",
@@ -369,6 +362,7 @@
         "tags": [
           "Recipes"
         ],
+        "summary": "Delete one recipe using recipe ID",
         "description": "",
         "parameters": [
           {
@@ -549,6 +543,10 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "62b22dbe5361f5388a5c5d87"
                 }
               },
               "required": [
@@ -600,15 +598,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "obj",
-            "in": "body",
-            "description": "Allows user to retrieve all shopping lists belonging to him/her",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
           }
         ],
         "responses": {
@@ -671,7 +660,35 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Allows user to update existing shopping list",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Updated Grocery List 1"
+                },
+                "items": {
+                  "type": "array",
+                  "example": [
+                    "bread",
+                    "milk",
+                    "butter",
+                    "sugar",
+                    "updated additional item"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
+          
         ],
         "responses": {
           "200": {
