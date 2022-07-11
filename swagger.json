@@ -127,6 +127,7 @@
         ],
         "summary": "Get all recipes from database",
         "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -167,12 +168,42 @@
         }
       }
     },
+    "/recipes/ingredients": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get all recipes that have specified ingredient(s)",
+        "description": "",
+        "parameters": [
+          {
+            "name": "ingredients",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/recipes/userPosted/{userPostedId}": {
       "get": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Get all recipes posted by specific userId",
+        "summary": "Get all recipes that have been posted by specific userId",
         "description": "",
         "parameters": [
           {
@@ -203,43 +234,13 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Get one recipe by recipe ID",
+        "summary": "Retrieve a single recipe with recipe id",
         "description": "",
         "parameters": [
           {
             "name": "recipe_id",
             "in": "path",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/recipes/ingredients": {
-      "get": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Get all recipes that have specified ingredient(s)",
-        "description": "",
-        "parameters": [
-          {
-            "name": "ingredients",
-            "in": "query",
             "type": "string"
           }
         ],
@@ -421,6 +422,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "412": {
             "description": "Precondition Failed"
           },
@@ -428,26 +432,30 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/reviews/": {
+      },
       "get": {
         "tags": [
           "Reviews"
         ],
-        "description": "Get all reviews",
+        "description": "Get A Reviews for a Recipe",
         "parameters": [
           {
             "name": "recipe_id",
             "in": "path",
-            "description": "Input recipe ID",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Input recipe ID"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -460,13 +468,29 @@
         "tags": [
           "Reviews"
         ],
-        "description": "",
+        "description": "Update a Review",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Input review ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "review": {
+                  "example": "any"
+                },
+                "rating": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -491,16 +515,20 @@
         "tags": [
           "Reviews"
         ],
-        "description": "",
+        "description": "Delete a review",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Input review ID"
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
           },
@@ -551,7 +579,8 @@
               },
               "required": [
                 "title",
-                "items"
+                "items",
+                "userId"
               ]
             }
           }
@@ -670,7 +699,7 @@
               "properties": {
                 "title": {
                   "type": "string",
-                  "example": "Updated Grocery List 1"
+                  "example": "Updated Grocery List"
                 },
                 "items": {
                   "type": "array",
@@ -684,11 +713,19 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "62b22dbe5361f5388a5c5d87"
                 }
-              }
+              },
+              "required": [
+                "title",
+                "items",
+                "userId"
+              ]
             }
           }
-          
         ],
         "responses": {
           "200": {
