@@ -53,14 +53,6 @@ routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
    }*/
 );
 
-// Retrieve a single recipe with id
-routes.get('/:recipe_id', recipes.findOne
-    // #swagger.tags = ['Recipes']
-    // #swagger.summary = 'Get recipe by recipe ID'
-    /* swagger.parameters
-    */
-);
-
 // Retrieve all recipes by key words
 routes.get('/keyWords', recipes.findByKeywords
     // #swagger.tags = ['Recipes']
@@ -77,9 +69,13 @@ routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
 );
 
 // Retrieve a single recipe with id
-routes.get('/:recipe_id', recipes.findOne, 
+routes.get('/:recipe_id', recipes.findOne
     // #swagger.tags = ['Recipes']
+    // #swagger.summary = 'Get recipe by recipe ID'
+    /* swagger.parameters
+    */
 );
+
 // Retrieve all recipes in database
 routes.get('/', recipes.findAll, authCheck
     // #swagger.tags = ['Recipes']

@@ -46,29 +46,6 @@ exports.findAll = (req, res) => {
   };
 
 
-// Find a single Recipe with an id
-exports.findOne = (req, res) => {
-    if (!ObjectId.isValid(req.params.recipe_id)) {
-      res.status(400).json({
-        message: 'A valid id is needed to retrive a recipe'
-      });
-    } else {
-      const recipe_id = req.params.recipe_id;
-      Recipe.find({ _id: recipe_id })
-        .then((data) => {
-          if (!data[0]) {
-            res.status(404).send({ message: 'Not found recipe with id ' + recipe_id });
-          } else res.send(data[0]);
-        })
-        .catch((err) => {
-          res.status(500).send({
-            message: 'Error retrieving recipe with recipe_id =' + recipe_id
-          });
-          console.log(err);
-        });
-    }
-  };
-
 //Find by key words
 //http://localhost:3000/recipes/keyWords/?keyWords[]=mash
 //http://localhost:3000/recipes/keyWords/?keyWords[]=cookie 
@@ -111,43 +88,68 @@ exports.findByKeywords = (req, res) => {
     }
   };
 
-  //http://localhost:3000/recipes/ingredients/?ingredients[]=salt&ingredients[]=jelly
-  exports.findByIngredients = (req, res) => {
-    if (!req.query.ingredients) {
-      res.status(400).json({
-        message: 'Valid ingredient(s) is needed to retrive recipes'
-      });
-    } else {
-      let ingredients = req.query.ingredients;
-      
-      //swagger sends ingredients as a string so I have to put it into an array
-      if (!Array.isArray(ingredients)) {
-        ingredients = ingredients.split(",")
-      }
-
-      const orArray = ingredients.map((searchValue) => {
-        return {
-            ingredients: { $regex: searchValue, $options: "i" }
-        }
-      });
-      Recipe.aggregate([{
-        $match: { $or: orArray }
-      }])
-        .then((data) => {
-          if (!data || data.length === 0) {
-            res.status(404).send({ message: `Not found. Recipe with ingredient(s) ${ingredients}. Try checking your spelling` });
-          } else {
-            res.send(data);
-          }
-        })
-        .catch((err) => {
-          res.status(500).send({
-            message: `Error retrieving recipe with ingredient(s) ${ingredients}`
-          });
-          console.log(err);
+    //http://localhost:3000/recipes/ingredients/?ingredients[]=salt&ingredients[]=jelly
+    exports.findByIngredients = (req, res) => {
+      if (!req.query.ingredients) {
+        res.status(400).json({
+          message: 'Valid ingredient(s) is needed to retrive recipes'
         });
-    }
-  };
+      } else {
+        let ingredients = req.query.ingredients;
+        
+        //swagger sends ingredients as a string so I have to put it into an array
+        if (!Array.isArray(ingredients)) {
+          ingredients = ingredients.split(",")
+        }
+  
+        const orArray = ingredients.map((searchValue) => {
+          return {
+              ingredients: { $regex: searchValue, $options: "i" }
+          }
+        });
+        Recipe.aggregate([{
+          $match: { $or: orArray }
+        }])
+          .then((data) => {
+            if (!data || data.length === 0) {
+              res.status(404).send({ message: `Not found. Recipe with ingredient(s) ${ingredients}. Try checking your spelling` });
+            } else {
+              res.send(data);
+            }
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message: `Error retrieving recipe with ingredient(s) ${ingredients}`
+            });
+            console.log(err);
+          });
+      }
+    };
+
+
+// Find a single Recipe with an id
+exports.findOne = (req, res) => {
+  if (!ObjectId.isValid(req.params.recipe_id)) {
+    res.status(400).json({
+      message: 'A valid recipe id is needed to retrive a recipe'
+    });
+  } else {
+    const recipe_id = req.params.recipe_id;
+    Recipe.find({ _id: recipe_id })
+      .then((data) => {
+        if (!data[0]) {
+          res.status(404).send({ message: 'Not found recipe with id ' + recipe_id });
+        } else res.send(data[0]);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: 'Error retrieving recipe with recipe_id =' + recipe_id
+        });
+        console.log(err);
+      });
+  }
+};
+
 
 
 // Find all recipes a specific user posted based on their id 

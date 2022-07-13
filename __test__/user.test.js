@@ -1,7 +1,6 @@
 const request = require('supertest');
-const app = require('../server');
+// const app = require('../server');
 const mongoose = require("mongoose");
-const env = require('dotenv').config();
 const sinon = require('sinon');
 const auth = require('../routes/auth-routes.js');
 

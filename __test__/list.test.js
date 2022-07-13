@@ -14,19 +14,53 @@ afterEach((done) => {
     });
 });
 
-describe('recipes', () => {
-    describe('get recipe route', () => {
-        describe('given recipe does not exist', () => {
-            it('should return a 400', async () => {
-                const recipeId = '1';
-                await request(app).get(`/recipes/${recipeId}`).expect(400);
+describe('lists', () => {
+    describe('get list route', () => {
+        describe('given list does not exist', () => {
+            it('should return a 404', async () => {
+                const listId = '1';
+                await request(app).get(`/list/${listId}`).expect(404);
             });
         });
-        describe('get all recipes', () => {
-            it('pulls all recipes from database', async () => {
-                const res = await (await request(app).get('/recipes'));
+        describe('get all lists', () => {
+            it('pulls all shopping lists from database', async () => {
+                const res = await (request(app).get('/lists'));
                 expect(res.statusCode).toEqual(200);
             });
         });
+
+        describe('get list by user', () => {
+            it('gets shopping list(s) belonging to certain user', async () => {
+                const res = await (request(app).get('/lists/user/62be10476a021bb553294d78'));
+                expect(res.statusCode).toEqual(200);
+            });
+        });
+
+        describe('get list by list ID', () => {
+            it('gets single list by list ID', async () => {
+                const res = await (request(app).get('lists/62c7481fb3669e9048dcc176'));
+                expect(res.statusCode).toEqual(200);
+            });
+        });
+
+        describe('post a shopping list', () => {
+            it('should create a shopping list for user', async() => {
+                const res = await (request(app).post('/lists')
+                .send({
+                    "title": "Kroger List",
+                    "items": [
+                      "peanuts",
+                      "milky way",
+                      "root beer",
+                      "plastic forks"
+                    ],
+                    "userId": "62b22dbe5361f5388a5c5d87"
+                  })
+                );
+                expect(res.statusCode).toEqual(200);
+            });
+        });
+
+
     });
 });

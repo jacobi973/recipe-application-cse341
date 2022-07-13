@@ -109,7 +109,7 @@ Content-Type: application/json
 ### List routes
 ##############################################
 
-### Get list by user ID
+### Get all lists
 
 GET http://localhost:3000/lists HTTP/1.1
 Content-Type: application/json

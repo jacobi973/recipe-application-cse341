@@ -5,13 +5,13 @@ const listRoutes = require('./list-routes.js');
 // const userRoutes = require('./user-routes.js');
 
 
-const authCheck = (req, res, next) => {
-  if (!req.user) {
-    res.redirect('/auth/home');
-  } else {
-    next();
-  }
-};
+// const authCheck = (req, res, next) => {
+//   if (!req.user) {
+//     res.redirect('/auth/home');
+//   } else {
+//     next();
+//   }
+// };
 
 // routes.get('/',
 //   // #swagger.ignore = true

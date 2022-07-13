@@ -94,7 +94,7 @@ describe('recipes', () => {
 
         describe('delete recipe', () => {
             it('delete recipe using recipe ID', async() => {
-                const res = await (request(app).delete('/recipes/62c89e7333bb578d1752b222'));
+                const res = await (request(app).delete('/recipes/62c89b9cc261961750369279'));
                 expect(res.statusCode).toEqual(200);
             });
         });
