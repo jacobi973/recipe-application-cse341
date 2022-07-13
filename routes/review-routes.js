@@ -2,16 +2,16 @@ const routes = require('express').Router();
 const reviews = require('../controller/review.js');
 const validation = require('../validation');
 
-const authCheck = (req, res, next) => {
-    if (!req.user) {
-      res.redirect('/auth/home');
-    } else {
-      next();
-    }
-  };
+// const authCheck = (req, res, next) => {
+//     if (!req.user) {
+//       res.redirect('/auth/home');
+//     } else {
+//       next();
+//     }
+//   };
 
-// Create a new recipe
-routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
+// Create a new review
+routes.post(`/:recipe_id`, validation.addNewReview, reviews.create
     // #swagger.tags = ['Reviews']
     // #swagger.description = 'Add a review'
 );
@@ -21,8 +21,8 @@ routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
 // Retrieve a single recipe with id
 //routes.get('/:recipe_id', recipes.findOne);
 
-// GET ALL REVIEWS
-routes.get('/:recipe_id', authCheck, reviews.findReviewByRecipe
+// GET ALL REVIEWS for specified recipe
+routes.get('/:recipe_id', reviews.findReviewByRecipe
     // #swagger.tags = ['Reviews']
     // #swagger.description = 'Get A Reviews for a Recipe'
     /* #swagger.parameters['recipe_id'] = {
@@ -33,7 +33,7 @@ routes.get('/:recipe_id', authCheck, reviews.findReviewByRecipe
     }*/
 );
 
-// Update a review with id
+// Update a review with using review id
 routes.put('/:id', validation.updateOneReview, reviews.update
 // #swagger.tags = ['Reviews']
     // #swagger.description = 'Update a Review'
@@ -44,7 +44,7 @@ routes.put('/:id', validation.updateOneReview, reviews.update
         type: 'string'
     }*/);
 
-// Delete a recipe with id
+// Delete a review using review id
 routes.delete('/:id', reviews.delete
 // #swagger.tags = ['Reviews']
     // #swagger.description = 'Delete a review'

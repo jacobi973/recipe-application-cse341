@@ -65,7 +65,7 @@ routes.post("/updateUser",
   user.update);
 
   // Retrive user in database
-routes.get('/', authCheck, user.findOne
+routes.get('/', user.findOne
 // #swagger.tags = ['User']
 );
 

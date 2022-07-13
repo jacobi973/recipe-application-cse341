@@ -32,7 +32,7 @@ describe('recipes', () => {
             it('gets single recipe using recipe ID', async() => {
                 const res = await ( request(app).get('/recipes/62b25438f507e8b500d4c1c4'));
                 expect(res.statusCode).toEqual(200);
-                expect(res.body.name).toEqual('Creamy Mashed Potatos')
+                expect(res.body.name).toEqual('Creamy Mashed Potatos');
             });
         });
 
@@ -46,7 +46,7 @@ describe('recipes', () => {
                         '1 Tbs butter'
                     ],
                     instructions: [
-                        ' 1. Melt butter in pan',
+                        '1. Melt butter in pan',
                         '2. Stir in eggs'
                     ],
                     servings: 2,
@@ -94,7 +94,7 @@ describe('recipes', () => {
 
         describe('delete recipe', () => {
             it('delete recipe using recipe ID', async() => {
-                const res = await (request(app).delete('/recipes/62c89ee81d99fb91f7cafec9'));
+                const res = await (request(app).delete('/recipes/62c89e7333bb578d1752b222'));
                 expect(res.statusCode).toEqual(200);
             });
         });
