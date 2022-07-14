@@ -1,7 +1,8 @@
+require('dotenv').config();
 const request = require('supertest');
 const app = require('../server');
 const mongoose = require("mongoose");
-require('dotenv').config();
+
 
 beforeEach((done) => {
     mongoose.connect(process.env.mongoDb, { useUnifiedTopology: true, useNewUrlParser: true },
@@ -19,26 +20,26 @@ describe('lists', () => {
         describe('given list does not exist', () => {
             it('should return a 404', async () => {
                 const listId = '1';
-                await request(app).get(`/list/${listId}`).expect(404);
+                await request(app).get(`/list/${listId}`).set('apikey', process.env.apikey).expect(404);
             });
         });
         describe('get all lists', () => {
             it('pulls all shopping lists from database', async () => {
-                const res = await (request(app).get('/lists'));
+                const res = await (request(app).get('/lists').set('apikey', process.env.apikey));
                 expect(res.statusCode).toEqual(200);
             });
         });
 
         describe('get list by user', () => {
             it('gets shopping list(s) belonging to certain user', async () => {
-                const res = await (request(app).get('/lists/user/62be10476a021bb553294d78'));
+                const res = await (request(app).get('/lists/user/62be10476a021bb553294d78').set('apikey', process.env.apikey));
                 expect(res.statusCode).toEqual(200);
             });
         });
 
         describe('get list by list ID', () => {
             it('gets single list by list ID', async () => {
-                const res = await (request(app).get('lists/62c7481fb3669e9048dcc176'));
+                const res = await (request(app).get('lists/62c7481fb3669e9048dcc176').set('apikey', process.env.apikey));
                 expect(res.statusCode).toEqual(200);
             });
         });
@@ -46,6 +47,7 @@ describe('lists', () => {
         describe('post a shopping list', () => {
             it('should create a shopping list for user', async() => {
                 const res = await (request(app).post('/lists')
+                .set('apikey', process.env.apikey)
                 .send({
                     "title": "Kroger List",
                     "items": [

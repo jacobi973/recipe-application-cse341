@@ -4,7 +4,7 @@
   "description": "recipe-Application",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "start": "nodemon app.js",
     "swaggerProd": "node ./swagger.js localhost:3000",
     "swaggerDev": "node ./swagger.js recipe-application-group.herokuapp.com"

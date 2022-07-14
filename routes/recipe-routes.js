@@ -3,16 +3,19 @@ const recipes = require('../controller/recipe');
 const validation = require('../validation');
 
 const authCheck = (req, res, next) => {
-    if (!req.user) {
+    const apikey = req.get('apikey');
+    if (!req.user && apikey !== process.env.apikey) {
+        console.log('apiKey',apikey);
       res.redirect('/auth/home');
     } else {
+        console.log('authCheck', apikey);
       next();
     }
   };
 
   
 // Create a new recipe
-routes.post('/', validation.addNewRecipe, recipes.create
+routes.post('/', authCheck,  validation.addNewRecipe, recipes.create
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Add a recipe to the database'
     /* #swagger.parameters['obj'] = {
@@ -30,7 +33,7 @@ routes.post('/', validation.addNewRecipe, recipes.create
 );
 
 // Retrieve all recipes by key words
-routes.get('/keyWords', recipes.findByKeywords
+routes.get('/keyWords', authCheck, recipes.findByKeywords
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Find a recipe using keyword'
     /* #swagger.parameters['obj'] = {
@@ -43,7 +46,7 @@ routes.get('/keyWords', recipes.findByKeywords
 );
 
 // Retrieve all recipes by user posted
-routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
+routes.get('/userPosted/:userPostedId', authCheck, recipes.findByUserPosted
    // #swagger.tags = ['Recipes']
    // #swagger.summary = 'Get recipes posted by certain user'
    /* #swagger.parameters['obj'] = {
@@ -54,22 +57,22 @@ routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
 );
 
 // Retrieve all recipes by key words
-routes.get('/keyWords', recipes.findByKeywords
+routes.get('/keyWords', authCheck, recipes.findByKeywords
     // #swagger.tags = ['Recipes']
 );
 
 // Retrieve all recipes by ingredients
-routes.get('/ingredients', recipes.findByIngredients
+routes.get('/ingredients', authCheck, recipes.findByIngredients
     // #swagger.tags = ['Recipes']
 );
 
 // Retrieve all recipes by user posted
-routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
+routes.get('/userPosted/:userPostedId', authCheck, recipes.findByUserPosted
     // #swagger.tags = ['Recipes']
 );
 
 // Retrieve a single recipe with id
-routes.get('/:recipe_id', recipes.findOne
+routes.get('/:recipe_id', authCheck, recipes.findOne
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Get recipe by recipe ID'
     /* swagger.parameters
@@ -83,7 +86,7 @@ routes.get('/', recipes.findAll, authCheck
 );
 
 // Update a recipe with id
-routes.put('/:id', validation.updateOneRecipe, recipes.update
+routes.put('/:id', authCheck, validation.updateOneRecipe, recipes.update
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Update recipe using ID'
     /* #swagger.parameters['obj'] = {
@@ -102,7 +105,7 @@ routes.put('/:id', validation.updateOneRecipe, recipes.update
 );
 
 // Delete a recipe with id
-routes.delete('/:id', recipes.delete
+routes.delete('/:id', authCheck, recipes.delete
     // #swagger.tags = ['Recipes']
 );
 
