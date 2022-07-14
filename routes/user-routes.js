@@ -2,12 +2,16 @@ const user = require('../controller/user.js');
 const routes = require('express').Router();
 
 const authCheck = (req, res, next) => {
-  if (!req.user) {
+  const apikey = req.get('apikey');
+  if (!req.user && apikey !== process.env.apikey) {
+      console.log('apiKey',apikey);
     res.redirect('/auth/home');
   } else {
+      
     next();
   }
 };
+
 
 // This sections is for the frontend part of the app
 routes.get("/delete",
@@ -61,7 +65,7 @@ routes.post("/updateUser",
         }
       }
   */
-
+      authCheck,
   user.update);
 
   // Retrive user in database
