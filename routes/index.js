@@ -11,7 +11,7 @@ const authCheck = (req, res, next) => {
       console.log('apiKey',apikey);
     res.redirect('/auth/home');
   } else {
-      console.log('authCheck', apikey);
+      
     next();
   }
 };
