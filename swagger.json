@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "recipe-application-group.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -476,6 +476,28 @@
             "required": true,
             "type": "string",
             "description": "Input review ID"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Update Receipe",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "review": {
+                  "type": "string",
+                  "example": "Review goes here"
+                },
+                "rating": {
+                  "type": "string",
+                  "example": "5"
+                }
+              },
+              "required": [
+                "review",
+                "rating"
+              ]
+            }
           }
         ],
         "responses": {

@@ -53,7 +53,16 @@ routes.put('/:id', authCheck, validation.updateOneReview, reviews.update
         description: 'Input review ID',
         required: true,
         type: 'string'
-    }*/);
+    }*/
+    /* #swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'Update Receipe',
+        schema: {
+            $review: 'Review goes here',
+            $rating: '5'
+        }
+    }*/
+    );
 
 // Delete a review using review id
 routes.delete('/:id', authCheck, reviews.delete
