@@ -5,19 +5,19 @@ const validation = require('../validation');
 const authCheck = (req, res, next) => {
     const apikey = req.get('apikey');
     if (!req.user && apikey !== process.env.apikey) {
-      res.redirect('/auth/home');
+        res.redirect('/auth/home');
     } else {
-        
-      next();
+
+        next();
     }
 };
 
-// Create a new review
+// Create a new Review for a recipe
 routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
     // #swagger.tags = ['Reviews']
     // #swagger.description = 'Add a review'
     // #swagger.summary = 'Add a review'
-        /* #swagger.parameters['obj'] = {
+    /* #swagger.parameters['obj'] = {
         in: 'body',
         description: 'Post a Review for a recipe',
         schema: {
@@ -26,14 +26,19 @@ routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
         }
     }*/
 );
-// Retrieve all recipes by user posted
-//routes.get('/userPosted/:userPostedId', recipes.findByUserPosted);
 
-// Retrieve a single recipe with id
-//routes.get('/:recipe_id', recipes.findOne);
 
-// GET ALL REVIEWS for specified recipe
-routes.get('/:recipe_id', authCheck, reviews.findReviewByRecipe
+
+
+//GET ALL REVIEWS
+routes.get('/', reviews.findAll
+    // #swagger.tags = ['Reviews']
+    // #swagger.summary = 'Get all Reviews'
+);
+
+
+// GET ONE REVIEW OF RECIPE 
+routes.get('/review/:recipe_id', authCheck, reviews.findReviewByRecipe
     // #swagger.tags = ['Reviews']
     // #swagger.description = 'Get A Reviews for a Recipe'
     /* #swagger.parameters['recipe_id'] = {
@@ -44,9 +49,16 @@ routes.get('/:recipe_id', authCheck, reviews.findReviewByRecipe
     }*/
 );
 
+// Retrieve a single review with id
+routes.get('/:id', authCheck, reviews.findOne
+    // #swagger.tags = ['Reviews']
+    // #swagger.summary = 'Get one review by review ID'
+    /* swagger.parameters
+     */
+);
 // Update a review with using review id
 routes.put('/:id', authCheck, validation.updateOneReview, reviews.update
-// #swagger.tags = ['Reviews']
+    // #swagger.tags = ['Reviews']
     // #swagger.description = 'Update a Review'
     /* #swagger.parameters['id'] = {
         in: 'path',
@@ -62,17 +74,19 @@ routes.put('/:id', authCheck, validation.updateOneReview, reviews.update
             $rating: '5'
         }
     }*/
-    );
+);
+
 
 // Delete a review using review id
 routes.delete('/:id', authCheck, reviews.delete
-// #swagger.tags = ['Reviews']
+    // #swagger.tags = ['Reviews']
     // #swagger.description = 'Delete a review'
     /* #swagger.parameters['id'] = {
         in: 'path',
         description: 'Input review ID',
         required: true,
         type: 'string'
-    }*/);
+    }*/
+);
 
 module.exports = routes;

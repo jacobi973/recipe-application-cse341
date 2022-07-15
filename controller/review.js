@@ -126,3 +126,36 @@ exports.delete = (req, res) => {
       });
   }
   };
+
+  exports.findAll = (req, res) => {
+    Review.find({})
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || 'Some error occurred while retrieving reviews.'
+        });
+      });
+  };
+  exports.findOne = (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+      res.status(400).json({
+        message: 'A valid id is needed to retrive a review'
+      });
+    } else {
+      const review_id = req.params.id;
+      Review.find({ _id: review_id })
+        .then((data) => {
+          if (!data[0]) {
+            res.status(404).send({ message: 'Not found review with id ' + review_id });
+          } else res.send(data[0]);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: 'Error retrieving review with recipe_id =' + review_id
+          });
+          console.log(err);
+        });
+    }
+  };

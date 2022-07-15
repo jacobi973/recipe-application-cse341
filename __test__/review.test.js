@@ -27,7 +27,7 @@ describe('reviews', () => {
 
         describe('get review(s) by recipe ID', () => {
                 it('retrieve reviews for chosen recipe', async () => {
-                    const res = await (await request(app).get(`/reviews/62b23fc9461fa48b03fe0b21`).set('apikey', process.env.apikey));
+                    const res = await (await request(app).get(`/reviews/review/62b23fc9461fa48b03fe0b21`).set('apikey', process.env.apikey));
                     expect(res.statusCode).toEqual(200);
                 });
             });
