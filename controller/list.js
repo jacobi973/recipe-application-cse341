@@ -46,8 +46,8 @@ exports.findByUser = (req, res) => {
       const userId = req.params.user_id;
       List.find({ userId: userId })
         .then((data) => {
-          if (!data) {
-            res.status(404).send({ message: `Not found. Lists posted by user with id  of ${userId}. Maybe user does not have any posts` });
+          if (!data || data.length === 0) {
+            res.status(404).send({ message: `Not found. Lists posted by user with id  of ${userId}. Maybe user does not have any posts or user does not exist` });
           } else {
             res.send(data);
           }

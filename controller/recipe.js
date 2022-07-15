@@ -5,38 +5,46 @@ const Recipe = require('../model/schemas').Recipe;
 const ObjectId = require('mongodb').ObjectId;
 
 exports.create = (req, res) => {
-  // Create a Recipe
-  let _id = ''
-  if (req.body._id) {
-    _id = req.body._id
-  } else {
-    _id = new ObjectId()
-  }
-    const recipe = new Recipe({
-      _id: _id,
-      name: req.body.name,
-      ingredients: req.body.ingredients,
-      instructions: req.body.instructions,
-      imageLink: req.body.imageLink,
-      date: Date.now(),
-      userPosted: req.body.userPosted,
-      keyWords: req.body.keyWords
-    });
-  
 
-  // Save Recipe in the database
-  recipe
-    .save(recipe)
-    .then(() => {
-      //req.session.message = 'Your Recipe was successfully posted!';
-      res.send('Your Recipe was successfully posted!');
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Recipe.'
-      });
+  if (!ObjectId.isValid(req.body.userPosted)) {
+    res.status(400).json({
+      message: 'A valid user id is needed to post a recipe'
     });
-};
+  } else {
+
+    // Create a Recipe
+    let _id = ''
+    if (req.body._id) {
+      _id = req.body._id
+    } else {
+      _id = new ObjectId()
+    }
+      const recipe = new Recipe({
+        _id: _id,
+        name: req.body.name,
+        ingredients: req.body.ingredients,
+        instructions: req.body.instructions,
+        imageLink: req.body.imageLink,
+        date: Date.now(),
+        userPosted: req.body.userPosted,
+        keyWords: req.body.keyWords
+      });
+    
+
+    // Save Recipe in the database
+    recipe
+      .save(recipe)
+      .then(() => {
+        //req.session.message = 'Your Recipe was successfully posted!';
+        res.send('Your Recipe was successfully posted!');
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || 'Some error occurred while creating the Recipe.'
+        });
+      });
+  }
+}
 
 
 exports.findAll = (req, res) => {
@@ -67,10 +75,16 @@ exports.findByKeywords = (req, res) => {
       
       //swagger sends keywords as a string so I have to put it into an array
       if (!Array.isArray(keyWords)) {
-        keyWords = keyWords.split(",")
+        keyWords = keyWords.split(/[, ]+/)
       }
 
-      const orArray = keyWords.map((searchValue) => {
+      // strip each word of any character that is not a number or letter
+      let strippedKeyWords = [];
+      keyWords.forEach((word) => {
+        strippedKeyWords.push(word.replace(/[^a-z0-9]/gi, ''))
+      })
+
+      const orArray = strippedKeyWords.map((searchValue) => {
         return {
             keyWords: searchValue,
         }
@@ -106,10 +120,16 @@ exports.findByKeywords = (req, res) => {
         
         //swagger sends ingredients as a string so I have to put it into an array
         if (!Array.isArray(ingredients)) {
-          ingredients = ingredients.split(",")
+          ingredients = ingredients.split(/[, ]+/)
         }
+
+        // strip each word of any character that is not a number or letter
+        let strippedIngredients = [];
+        ingredients.forEach((word) => {
+          strippedIngredients.push(word.replace(/[^a-z0-9]/gi, ''))
+        })
   
-        const orArray = ingredients.map((searchValue) => {
+        const orArray = strippedIngredients.map((searchValue) => {
           return {
               ingredients: { $regex: searchValue, $options: "i" }
           }
