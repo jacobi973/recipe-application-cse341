@@ -1,6 +1,3 @@
-//const routes = require('express').Router();
-// eslint-disable-next-line no-unused-vars
-
 const List = require('../model/schemas').List;
 const ObjectId = require('mongodb').ObjectId;
 
@@ -26,7 +23,6 @@ exports.create = (req, res) => {
   list
     .save(list)
     .then(() => {
-      //req.session.message = 'Your Recipe was successfully posted!';
       res.send('Your List was successfully posted!');
     })
     .catch((err) => {
@@ -157,6 +153,3 @@ exports.delete = (req, res) => {
         });
     }
   };
-
-
-//module.exports = routes;

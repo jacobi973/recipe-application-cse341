@@ -11,8 +11,6 @@ const swaggerDocument = require('./swagger.json');
 const sessions = require('express-session');
 const app = express();
 const cors = require('cors');
-// eslint-disable-next-line no-unused-vars
-const authCheck = require('./routes/index');
 require('dotenv').config();
 const port = process.env.PORT || 3000;
 

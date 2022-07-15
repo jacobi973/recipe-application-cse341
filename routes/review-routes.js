@@ -5,7 +5,6 @@ const validation = require('../validation');
 const authCheck = (req, res, next) => {
     const apikey = req.get('apikey');
     if (!req.user && apikey !== process.env.apikey) {
-        console.log('apiKey',apikey);
       res.redirect('/auth/home');
     } else {
         
@@ -17,6 +16,15 @@ const authCheck = (req, res, next) => {
 routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
     // #swagger.tags = ['Reviews']
     // #swagger.description = 'Add a review'
+    // #swagger.summary = 'Add a review'
+        /* #swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'Post a Review for a recipe',
+        schema: {
+            $review: 'Review goes here',
+            $rating: '5'
+        }
+    }*/
 );
 // Retrieve all recipes by user posted
 //routes.get('/userPosted/:userPostedId', recipes.findByUserPosted);

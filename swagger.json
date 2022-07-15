@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "recipe-application-group.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "name": "List",
-      "description": "Shopping list for users"
+      "description": "Shopping list for recipes"
     },
     {
       "name": "User",
@@ -83,10 +83,6 @@
                   "type": "string",
                   "example": "https://unsplash.com/photos/_BBTqanOrBI"
                 },
-                "userPosted": {
-                  "type": "string",
-                  "example": "62b0d6fc3620510a74d6ecba"
-                },
                 "keyWords": {
                   "type": "array",
                   "example": [
@@ -103,8 +99,7 @@
                 "ingredients",
                 "instructions",
                 "imageLink",
-                "userPosted",
-                "keywords"
+                "keyWords"
               ]
             }
           }
@@ -127,6 +122,7 @@
         ],
         "summary": "Get all recipes from database",
         "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -137,12 +133,40 @@
         }
       }
     },
-    "/recipes/keywords": {
+    "/recipes/userPosted/{userPosted}": {
       "get": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Get all recipes that have specified keyword(s)",
+        "summary": "Get recipes posted by certain user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userPosted",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/recipes/keyWords": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Find recipes using keyword",
         "description": "",
         "parameters": [
           {
@@ -167,18 +191,17 @@
         }
       }
     },
-    "/recipes/userPosted/{userPostedId}": {
+    "/recipes/ingredients": {
       "get": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Get all recipes posted by specific userId",
+        "summary": "Find recipes using ingredients",
         "description": "",
         "parameters": [
           {
-            "name": "userPostedId",
-            "in": "path",
-            "required": true,
+            "name": "ingredients",
+            "in": "query",
             "type": "string"
           }
         ],
@@ -203,7 +226,7 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Get one recipe by recipe ID",
+        "summary": "Get recipe by recipe ID",
         "description": "",
         "parameters": [
           {
@@ -229,42 +252,12 @@
         }
       }
     },
-    "/recipes/ingredients": {
-      "get": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Get all recipes that have specified ingredient(s)",
-        "description": "",
-        "parameters": [
-          {
-            "name": "ingredients",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/recipes/{id}": {
       "put": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Update one recipe using recipe ID",
+        "summary": "Update recipe using ID",
         "description": "",
         "parameters": [
           {
@@ -283,7 +276,7 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Updated Name Pizza Pie"
+                  "example": "Pizza Pie"
                 },
                 "ingredients": {
                   "type": "array",
@@ -362,7 +355,7 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Delete one recipe using recipe ID",
+        "summary": "Delete recipe using ID",
         "description": "",
         "parameters": [
           {
@@ -393,6 +386,7 @@
         "tags": [
           "Reviews"
         ],
+        "summary": "Add a review",
         "description": "Add a review",
         "parameters": [
           {
@@ -402,24 +396,34 @@
             "type": "string"
           },
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Post a Review for a recipe",
             "schema": {
               "type": "object",
               "properties": {
                 "review": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Review goes here"
                 },
                 "rating": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "5"
                 }
-              }
+              },
+              "required": [
+                "review",
+                "rating"
+              ]
             }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "412": {
             "description": "Precondition Failed"
@@ -428,26 +432,93 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/reviews/": {
+      },
       "get": {
         "tags": [
           "Reviews"
         ],
-        "description": "Get all reviews",
+        "description": "Get A Reviews for a Recipe",
         "parameters": [
           {
             "name": "recipe_id",
             "in": "path",
-            "description": "Input recipe ID",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Input recipe ID"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "put": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Update a Review",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Input review ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Delete a review",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Input review ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -493,7 +564,8 @@
               },
               "required": [
                 "title",
-                "items"
+                "items",
+                "userId"
               ]
             }
           }
@@ -612,7 +684,7 @@
               "properties": {
                 "title": {
                   "type": "string",
-                  "example": "Updated Grocery List 1"
+                  "example": "Updated Grocery List"
                 },
                 "items": {
                   "type": "array",
@@ -626,11 +698,19 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "62b22dbe5361f5388a5c5d87"
                 }
-              }
+              },
+              "required": [
+                "title",
+                "items",
+                "userId"
+              ]
             }
           }
-          
         ],
         "responses": {
           "200": {

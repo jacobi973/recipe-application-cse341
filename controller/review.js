@@ -1,26 +1,30 @@
 const Review = require('../model/schemas').Review;
-// eslint-disable-next-line no-unused-vars
 const ObjectId = require('mongodb').ObjectId;
 
 exports.create = (req, res) => {
   if (!ObjectId.isValid(req.params.recipe_id)) {
-    //console.log(req.params.recipe_id)
     res.status(400).json({
       message: 'A valid recipe id is needed to update review'
     });
   }
-
+// For testing purposes as the jest test will not have a session.
   let _id = ''
   if (req.body._id) {
     _id = req.body._id
   } else {
     _id = new ObjectId()
   }
+  let userId = ''
+  if (req.body.userId) {
+    userId = req.body.userId
+  } else {
+    userId = req.user._id
+  }
     // Create a Review based on recipe_id, and user_id
     const review = new Review({
       _id: _id,
       recipeId: req.params.recipe_id,
-      userId: req.body.googleId,
+      userId: userId,
       review: req.body.review,
       rating: req.body.rating
     });
@@ -36,6 +40,7 @@ exports.create = (req, res) => {
         });
       });
   };
+  
 //GET ALL reviews for a given recipe
 exports.findReviewByRecipe = (req, res) => {
   if (!ObjectId.isValid(req.params.recipe_id)) {

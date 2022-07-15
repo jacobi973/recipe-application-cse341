@@ -7,7 +7,6 @@ const addNewRecipe = (req, res, next) => {
     ingredients: 'required|array',
     instructions: 'required|array',
     imageLink: 'string',
-    userPosted: 'required|string',
     keyWords: 'required|array'
   };
   validator(req.body, validationRule, {}, (err, status) => {

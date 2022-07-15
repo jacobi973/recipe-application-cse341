@@ -5,7 +5,6 @@ const validation = require('../validation');
 const authCheck = (req, res, next) => {
     const apikey = req.get('apikey');
     if (!req.user && apikey !== process.env.apikey) {
-        console.log('apiKey',apikey);
       res.redirect('/auth/home');
     } else {
         
@@ -26,57 +25,36 @@ routes.post('/', authCheck, validation.addNewRecipe, recipes.create
             $ingredients: ['1 lb cream cheese', '1 cup sugar', '2 eggs', '1 can cherry pie filling'],
             $instructions: ['Beat cream cheese and sugar together until smooth', 'Beat in eggs until smooth', 'Bake at 350F for 45 minutes', 'Spread cherry filling on top'],
             $imageLink: 'https://unsplash.com/photos/_BBTqanOrBI',
-            $userPosted: '62b0d6fc3620510a74d6ecba',
             $keyWords: ['cream cheese', 'cherry']
         }
     }*/
 );
 
-// Retrieve all recipes by key words
-routes.get('/keyWords', authCheck, recipes.findByKeywords
-    // #swagger.tags = ['Recipes']
-    // #swagger.summary = 'Find a recipe using keyword'
-    /* #swagger.parameters['obj'] = {
-        in: 'body',
-        description: 'Use keyword to find recipe',
-        schema: {
-            $keyWords: 'cookie'
-        }
-    }*/
-);
 
 // Retrieve all recipes by user posted
-routes.get('/userPosted/:userPostedId', authCheck, recipes.findByUserPosted
+routes.get('/userPosted/:userPosted', authCheck, recipes.findByUserPosted
    // #swagger.tags = ['Recipes']
    // #swagger.summary = 'Get recipes posted by certain user'
-   /* #swagger.parameters['obj'] = {
-    in: 'body',
-    description: 'Use user ID to retrieve recipes',
-    example: '100552395345978742943'
-   }*/
 );
 
 // Retrieve all recipes by key words
 routes.get('/keyWords', authCheck, recipes.findByKeywords
     // #swagger.tags = ['Recipes']
+    // #swagger.summary = 'Find recipes using keyword'
 );
 
 // Retrieve all recipes by ingredients
 routes.get('/ingredients', authCheck, recipes.findByIngredients
     // #swagger.tags = ['Recipes']
+    // #swagger.summary = 'Find recipes using ingredients'
 );
 
-// Retrieve all recipes by user posted
-routes.get('/userPosted/:userPostedId', authCheck, recipes.findByUserPosted
-    // #swagger.tags = ['Recipes']
-);
+
 
 // Retrieve a single recipe with id
 routes.get('/:recipe_id', authCheck, recipes.findOne
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Get recipe by recipe ID'
-    /* swagger.parameters
-    */
 );
 
 // Retrieve all recipes in database
@@ -107,6 +85,7 @@ routes.put('/:id', authCheck, validation.updateOneRecipe, recipes.update
 // Delete a recipe with id
 routes.delete('/:id', authCheck, recipes.delete
     // #swagger.tags = ['Recipes']
+    // #swagger.summary = 'Delete recipe using ID'
 );
 
 module.exports = routes;
