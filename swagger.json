@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "localhost:3000",
+  "host": "recipe-application-group.herokuapp.com",
   "basePath": "/",
   "tags": [
     {
@@ -760,33 +760,68 @@
         }
       }
     },
-    "/users/{id}": {
-      "delete": {
-        "tags": [
-          "User"
-        ],
-        "description": "This method deletes a user. This is for documentation purposes only. All deletes will go through the frontend.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "User ID.",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      },
+    "/user/": {
       "post": {
         "tags": [
           "User"
         ],
+        "summary": "Create a new user",
+        "description": "This method updates creates a user. This is for documentation purposes only. All creations will go through the frontend.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Submit a user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "googleId": {
+                  "type": "string",
+                  "example": "123456789"
+                },
+                "username": {
+                  "type": "string",
+                  "example": "user"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get your user information",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a user",
         "description": "This method updates user information. The current fields are: username, and dob. The new values are passed in the body of the request. This is for documentation purposes only. All updates will go through the frontend.",
         "parameters": [
           {
@@ -817,23 +852,29 @@
           }
         ],
         "responses": {}
-      }
-    },
-    "/user/": {
-      "get": {
+      },
+      "delete": {
         "tags": [
           "User"
         ],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
+        "summary": "Delete a user",
+        "description": "This method deletes a user. This is for documentation purposes only. All deletes will go through the frontend.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID.",
+            "required": true,
+            "type": "string"
           }
-        }
+        ],
+        "responses": {}
       }
     }
   }

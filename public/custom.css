@@ -1672,6 +1672,7 @@
  }
 
  #operations-User-post_users__id_ > div.no-margin > div > div.opblock-section > div.opblock-section-header > div.try-out > button,
- #operations-User-delete_users__id_ > div.no-margin > div > div.opblock-section > div.opblock-section-header > div.try-out > button {
+ #operations-User-delete_users__id_ > div.no-margin > div > div.opblock-section > div.opblock-section-header > div.try-out > button,
+ #operations-User-post_user_ > div.no-margin > div > div.opblock-section > div.opblock-section-header > div.try-out > button {
   visibility: hidden;
  }

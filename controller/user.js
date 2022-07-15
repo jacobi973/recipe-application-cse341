@@ -1,7 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const {User} = require('../model/schemas');
-const ObjectId = require('mongodb').ObjectId;
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -56,14 +55,18 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res, next) => {
-    if (!ObjectId.isValid(req.user._id)) {
+    if (!req.user.googleId && !req.body.googleId) {
       res.status(400).json({
         message: 'A valid id is needed to delete user'
       });
     } else {
-      const id = req.user._id;
-  
-      User.findByIdAndRemove(id)
+      let id = ''
+      if(req?.user?.googleId) {
+        id = req.user.googleId;
+      } else {
+        id = req?.body?.googleId;
+      }
+      User.findOneAndDelete({ googleId: id })
         .then((data) => {
           if (!data) {
             res.status(404).send({
@@ -72,7 +75,7 @@ exports.delete = (req, res, next) => {
           } else {
             req.logout(req.user, err => {
                 if(err) return next(err);
-                res.render("deleted");
+                res.status(200).render("deleted");
               });
             
           }
@@ -88,7 +91,19 @@ exports.delete = (req, res, next) => {
 
 // Find a single Recipe with an id
 exports.findOne = (req, res) => {
-    const googleId= req.user.googleId;
+  console.log(req.body);
+    let googleId= '';
+    if(req.user){
+        googleId = req.user.googleId;
+    } else {
+        googleId = req?.body?.googleId;
+    }
+    console.log('googleId: ', googleId);
+    if (!googleId) {
+      res.status(400).json({
+        message: 'A google id is needed to find you'
+      });
+    } else {
     User.find({ googleId: googleId })
       .then((data) => {
          res.send(data[0]);
@@ -99,4 +114,21 @@ exports.findOne = (req, res) => {
         });
         console.log(err);
       });
+    }
 };
+
+exports.create  = (req, res) => {
+    const user = new User({
+        googleId: req.body.googleId,
+        username: req.body.username
+    });
+    user.save()
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || 'Some error occurred while creating the user.'
+        });
+      });
+}

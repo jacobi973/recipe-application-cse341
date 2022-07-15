@@ -20,7 +20,7 @@ describe('reviews', () => {
         // describe('given review does not exist', () => {
         //     it('should return a 400', async () => {
         //         const reviewId = '1';
-        //         awaitrequest(app).get(`/reviews/${reviewId}`).expect(400);
+        //         await request(app).get(`/reviews/${reviewId}`).expect(400);
         //     });
         // });
 
