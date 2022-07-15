@@ -18,7 +18,7 @@ const recipe = new mongoose.Schema({
 }, {
     collection: 'recipes'
 });
-const Recipe = mongoose.model('recipe', recipe)
+const Recipe = mongoose.model('Recipe', recipe)
 
 // List schema
 const list = new mongoose.Schema({

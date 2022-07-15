@@ -62,7 +62,7 @@ Content-Type: application/json
 
 ### Get all reviews
 
-// GET https://recipe-application-group.herokuapp.com/reviews  << not needed? >>
+GET https://recipe-application-group.herokuapp.com/reviews  
 
 ### Get review(s) by user ID
 

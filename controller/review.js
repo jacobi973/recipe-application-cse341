@@ -6,7 +6,7 @@ exports.create = (req, res) => {
   if (!ObjectId.isValid(req.params.recipe_id)) {
     console.log(req.params.recipe_id)
     res.status(400).json({
-      message: 'A valid id is needed to update review'
+      message: 'A valid recipe id is needed to update review'
     });
   }
     // Create a Review based on recipe_id, and user_id

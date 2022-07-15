@@ -3,12 +3,10 @@ const recipes = require('../controller/recipe');
 const validation = require('../validation');
 
 const authCheck = (req, res, next) => {
-    if (!req.user) {
+    if (req.isAuthenticated()) {
+        return next()}
       res.redirect('/auth/home');
-    } else {
-      next();
     }
-  };
 
   
 // Create a new recipe
@@ -30,7 +28,7 @@ routes.post('/', validation.addNewRecipe, recipes.create
 );
 
 // Retrieve all recipes by key words
-routes.get('/keyWords', recipes.findByKeywords
+routes.get('/keyWords', authCheck, recipes.findByKeywords
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Find a recipe using keyword'
     /* #swagger.parameters['obj'] = {
@@ -52,11 +50,11 @@ routes.get('/userPosted/:userPostedId', recipes.findByUserPosted
     example: '100552395345978742943'
    }*/
 );
-
-// Retrieve all recipes by key words
-routes.get('/keyWords', recipes.findByKeywords
-    // #swagger.tags = ['Recipes']
-);
+// DUPLICATE?
+// // Retrieve all recipes by key words
+// routes.get('/keyWords', recipes.findByKeywords
+//     // #swagger.tags = ['Recipes']
+// );
 
 // Retrieve all recipes by ingredients
 routes.get('/ingredients', recipes.findByIngredients
@@ -77,7 +75,7 @@ routes.get('/:recipe_id', recipes.findOne
 );
 
 // Retrieve all recipes in database
-routes.get('/', recipes.findAll, authCheck
+routes.get('/', recipes.findAll 
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Get all recipes from database'
 );

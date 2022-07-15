@@ -1,5 +1,6 @@
 const Review = require("../../models/review");
 const Recipe = require("../../models/recipe");
+const List = require("../../models/list");
 const { addNewRecipe } = require("../../validation");
 
 module.exports = {
@@ -73,6 +74,10 @@ module.exports = {
         } catch (error) {
             throw error
         }
-    },
+    }
+
+    // deleteRecipe: async (args, req) => {
+    //     const fetchedEvent = await Recipe.findOne({ _id: args.})
+    // }
 
 }

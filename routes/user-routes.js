@@ -64,7 +64,7 @@ routes.post("/updateUser",
 
   user.update);
 
-  // Retrive user in database
+  // Retrieve user in database
 routes.get('/', user.findOne
 // #swagger.tags = ['User']
 );
