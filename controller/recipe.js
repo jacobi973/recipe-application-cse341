@@ -6,21 +6,28 @@ const ObjectId = require('mongodb').ObjectId;
 
 exports.create = (req, res) => {
   // Create a Recipe
-  const recipe = new Recipe({
-    name: req.body.name,
-    ingredients: req.body.ingredients,
-    instructions: req.body.instructions,
-    imageLink: req.body.imageLink,
-    date: Date.now(),
-    userPosted: req.body.userPosted,
-    keyWords: req.body.keyWords
-  });
+  let _id = ''
+  if (req.body._id) {
+    _id = req.body._id
+  } else {
+    _id = new ObjectId()
+  }
+    const recipe = new Recipe({
+      _id: _id,
+      name: req.body.name,
+      ingredients: req.body.ingredients,
+      instructions: req.body.instructions,
+      imageLink: req.body.imageLink,
+      date: Date.now(),
+      userPosted: req.body.userPosted,
+      keyWords: req.body.keyWords
+    });
+  
 
   // Save Recipe in the database
   recipe
     .save(recipe)
-    .then((data) => {
-      console.log(data);
+    .then(() => {
       //req.session.message = 'Your Recipe was successfully posted!';
       res.send('Your Recipe was successfully posted!');
     })

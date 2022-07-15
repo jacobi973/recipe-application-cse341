@@ -16,6 +16,7 @@ const authCheck = (req, res, next) => {
   }
 };
 
+
 routes.get('/',
   // #swagger.ignore = true
   authCheck, (req, res) => {
@@ -25,13 +26,11 @@ routes.get('/',
 
   });
 
+
 routes.use('/recipes', recipeRoutes);
 routes.use('/reviews', reviewRoutes);
 routes.use('/lists', listRoutes);
 routes.use('/user',  userRoutes);
 
-// routes.use('/recipe', require('../controller/recipe'));
-// routes.use('/review', require('../controller/review'));
-// routes.use('/list', require('../controller/list'));
 
 module.exports = routes;

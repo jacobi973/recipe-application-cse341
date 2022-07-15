@@ -1,7 +1,9 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
 // Recipe schema
 const recipe = new mongoose.Schema({
+    _id: ObjectId,
     name: {
         type: String,
         required: true
@@ -40,6 +42,7 @@ const List = mongoose.model('list', list)
 
 // Reviews schema
 const reviews = new mongoose.Schema({
+    _id: ObjectId,
     recipeId: {
         type: String,
         required: true
@@ -59,7 +62,7 @@ const reviews = new mongoose.Schema({
 }, {
     collection: 'reviews'
 });
-const Reviews = mongoose.model('reviews', reviews)
+const Review = mongoose.model('reviews', reviews)
 
 // User schema
 const userSchema = new mongoose.Schema({
@@ -74,7 +77,7 @@ const User = mongoose.model('user', userSchema);
 
 module.exports = {
     Recipe,
-    Reviews,
+    Review,
     List,
     User
 };

@@ -1,24 +1,33 @@
-const Review = require('../model/schemas').Reviews;
+const Review = require('../model/schemas').Review;
 // eslint-disable-next-line no-unused-vars
 const ObjectId = require('mongodb').ObjectId;
 
 exports.create = (req, res) => {
   if (!ObjectId.isValid(req.params.recipe_id)) {
-    console.log(req.params.recipe_id)
+    //console.log(req.params.recipe_id)
     res.status(400).json({
-      message: 'A valid id is needed to update review'
+      message: 'A valid recipe id is needed to update review'
     });
+  }
+
+  let _id = ''
+  if (req.body._id) {
+    _id = req.body._id
+  } else {
+    _id = new ObjectId()
   }
     // Create a Review based on recipe_id, and user_id
     const review = new Review({
+      _id: _id,
       recipeId: req.params.recipe_id,
-      userId: req.user.googleId,
+      userId: req.body.googleId,
       review: req.body.review,
       rating: req.body.rating
     });
+
     review
       .save(review)
-      .then((data) => {
+      .then(() => {
         res.send('Your Review was successfully posted!');
       })
       .catch((err) => {
@@ -64,15 +73,9 @@ exports.update = (req, res) => {
     });
   } else {
     const id = req.params.id;
-    const review = {
-      recipeId: req.params.recipe_id,
-      userId: req.user.googleId,
-      review: req.body.review,
-      rating: req.body.rating
-    };
     
 
-    Review.findByIdAndUpdate(id, review, { useFindAndModify: false })
+    Review.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
       .then((data) => {
         if (!data) {
           res.status(404).send({
@@ -90,7 +93,7 @@ exports.update = (req, res) => {
 };
 
 
-exports.delete = (req, res, next) => {
+exports.delete = (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
     res.status(400).json({
       message: 'A valid id is needed to delete recipe'
