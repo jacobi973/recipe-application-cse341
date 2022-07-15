@@ -3,7 +3,16 @@ const ObjectId = require('mongodb').ObjectId;
 
 exports.create = (req, res) => {
   // Create a List
+
+  let _id = ''
+  if (req.body._id) {
+    _id = req.body._id
+  } else {
+    _id = new ObjectId()
+  }
+
   const list = new List({
+    _id: _id,
     title: req.body.title,
     items: req.body.items,
     date: Date.now(),
