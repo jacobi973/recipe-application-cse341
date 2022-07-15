@@ -52,13 +52,11 @@ describe('reviews', () => {
 
         describe('post one review', () => {
             it('post a new review for a recipe', async() => {
-                //const recipeId = ObjectId('62b25438f507e8b500d4c1c4')
                 const res = await (request(app).post('/reviews/62b25438f507e8b500d4c1c4')
-                //const res = await (request(app).post('/reviews')
                 .set('apikey', process.env.apikey)
                 .send({
                     _id: '4edd40c86762e0fb12000002',
-                    googleId: '100552395345978742943',
+                    userId: '100552395345978742943',
                     review: 'so easy to make!',
                     rating: '5'
                 })

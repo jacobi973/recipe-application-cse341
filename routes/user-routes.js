@@ -4,7 +4,6 @@ const routes = require('express').Router();
 const authCheck = (req, res, next) => {
   const apikey = req.get('apikey');
   if (!req.user && apikey !== process.env.apikey) {
-      console.log('apiKey',apikey);
     res.redirect('/auth/home');
   } else {
       
@@ -65,7 +64,7 @@ routes.post("/updateUser",
         }
       }
   */
-      authCheck,
+  authCheck,
   user.update);
 
   // Retrive user in database

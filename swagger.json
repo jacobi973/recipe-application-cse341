@@ -5,7 +5,7 @@
     "title": "Recipe and Shopping List API",
     "description": "Recipe database with reviews and shopping list"
   },
-  "host": "recipe-application-group.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "name": "List",
-      "description": "Shopping list for users"
+      "description": "Shopping list for recipes"
     },
     {
       "name": "User",
@@ -83,10 +83,6 @@
                   "type": "string",
                   "example": "https://unsplash.com/photos/_BBTqanOrBI"
                 },
-                "userPosted": {
-                  "type": "string",
-                  "example": "62b0d6fc3620510a74d6ecba"
-                },
                 "keyWords": {
                   "type": "array",
                   "example": [
@@ -103,7 +99,6 @@
                 "ingredients",
                 "instructions",
                 "imageLink",
-                "userPosted",
                 "keyWords"
               ]
             }
@@ -138,12 +133,40 @@
         }
       }
     },
+    "/recipes/userPosted/{userPosted}": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get recipes posted by certain user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userPosted",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/recipes/keyWords": {
       "get": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Get all recipes that have specified keyword(s)",
+        "summary": "Find recipes using keyword",
         "description": "",
         "parameters": [
           {
@@ -173,7 +196,7 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Get all recipes that have specified ingredient(s)",
+        "summary": "Find recipes using ingredients",
         "description": "",
         "parameters": [
           {
@@ -198,43 +221,12 @@
         }
       }
     },
-    "/recipes/userPosted/{userPostedId}": {
-      "get": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Get all recipes that have been posted by specific userId",
-        "description": "",
-        "parameters": [
-          {
-            "name": "userPostedId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/recipes/{recipe_id}": {
       "get": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Retrieve a single recipe with recipe id",
+        "summary": "Get recipe by recipe ID",
         "description": "",
         "parameters": [
           {
@@ -265,7 +257,7 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Update one recipe using recipe ID",
+        "summary": "Update recipe using ID",
         "description": "",
         "parameters": [
           {
@@ -284,7 +276,7 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Updated Name Pizza Pie"
+                  "example": "Pizza Pie"
                 },
                 "ingredients": {
                   "type": "array",
@@ -363,7 +355,7 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Delete one recipe using recipe ID",
+        "summary": "Delete recipe using ID",
         "description": "",
         "parameters": [
           {
@@ -394,6 +386,7 @@
         "tags": [
           "Reviews"
         ],
+        "summary": "Add a review",
         "description": "Add a review",
         "parameters": [
           {
@@ -403,18 +396,25 @@
             "type": "string"
           },
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Post a Review for a recipe",
             "schema": {
               "type": "object",
               "properties": {
                 "review": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Review goes here"
                 },
                 "rating": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "5"
                 }
-              }
+              },
+              "required": [
+                "review",
+                "rating"
+              ]
             }
           }
         ],
@@ -476,21 +476,6 @@
             "required": true,
             "type": "string",
             "description": "Input review ID"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "review": {
-                  "example": "any"
-                },
-                "rating": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {

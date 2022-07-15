@@ -36,11 +36,7 @@ passport.use(
     })
 );
 
-
-
-// eslint-disable-next-line no-unused-vars
 exports.update = (req, res) => {
-  console.log('updated',req.body);
     const id = req.user._id;
     User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
       .then((data) => {
@@ -58,8 +54,6 @@ exports.update = (req, res) => {
       });
   
 };
-
-
 
 exports.delete = (req, res, next) => {
     if (!ObjectId.isValid(req.user._id)) {
