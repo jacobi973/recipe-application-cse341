@@ -3,14 +3,17 @@ const reviews = require('../controller/review.js');
 const validation = require('../validation');
 
 const authCheck = (req, res, next) => {
-    if (!req.user) {
+    const apikey = req.get('apikey');
+    if (!req.user && apikey !== process.env.apikey) {
+        console.log('apiKey',apikey);
       res.redirect('/auth/home');
     } else {
+        
       next();
     }
   };
 
-// Create a new recipe
+// Create a new review
 routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
     // #swagger.tags = ['Reviews']
     // #swagger.description = 'Add a review'
@@ -21,7 +24,7 @@ routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
 // Retrieve a single recipe with id
 //routes.get('/:recipe_id', recipes.findOne);
 
-// GET ALL REVIEWS
+// GET ALL REVIEWS for specified recipe
 routes.get('/:recipe_id', authCheck, reviews.findReviewByRecipe
     // #swagger.tags = ['Reviews']
     // #swagger.description = 'Get A Reviews for a Recipe'
@@ -33,8 +36,8 @@ routes.get('/:recipe_id', authCheck, reviews.findReviewByRecipe
     }*/
 );
 
-// Update a review with id
-routes.put('/:id', validation.updateOneReview, reviews.update
+// Update a review with using review id
+routes.put('/:id', authCheck, validation.updateOneReview, reviews.update
 // #swagger.tags = ['Reviews']
     // #swagger.description = 'Update a Review'
     /* #swagger.parameters['id'] = {
@@ -44,8 +47,8 @@ routes.put('/:id', validation.updateOneReview, reviews.update
         type: 'string'
     }*/);
 
-// Delete a recipe with id
-routes.delete('/:id', reviews.delete
+// Delete a review using review id
+routes.delete('/:id', authCheck, reviews.delete
 // #swagger.tags = ['Reviews']
     // #swagger.description = 'Delete a review'
     /* #swagger.parameters['id'] = {

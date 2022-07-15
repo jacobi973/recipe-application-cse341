@@ -1,0 +1,168 @@
+#########################################
+### Recipe Routes
+#########################################
+
+### Get all recipes
+
+GET http://localhost:3000/recipes
+
+### Get recipe matching recipe ID
+
+GET http://localhost:3000/recipes/62b25438f507e8b500d4c1c4 HTTP/1.1 Content-Type: application/json
+
+### Add recipe
+
+POST http://localhost:3000/recipes HTTP/1.1 Content-Type: application/json
+
+{
+"name": "Scrambled Eggs", "ingredients": [
+
+"4 large eggs", "1/4 cup half-n-half", "1/4 tsp salt", "1 Tbs butter"
+], "instructions": [
+
+"1. Whisk first 3 ingredients together", "2. Melt butter in non-stick pan over medium heat", "3. Add egg mixture and reduce heat to medium low", "4. Stir/scrape with spatula until most egg is solid", "5. Remove from heat and serve"
+], "servings": 2, "imageLink": "scrambled_eggs.jpg", "keyWords": [
+
+"eggs", "easy", "breakfast"
+], "userPosted": "62b0d6fc3620510a74d6ecba"
+
+}
+
+### Get recipe using keyword
+
+GET http://localhost:3000/recipes/keyWords?keyWords=cookie HTTP/1.1
+Content-Type: application/json
+
+### Get recipe(s) by user ID
+
+GET http://localhost:3000/recipes/userPosted/62b22dbe5361f5388a5c5d87 HTTP/1.1
+Content-Type: application/json
+
+### Get recipe by ingredient
+
+GET http://localhost:3000/recipes/ingredients?ingredients=milk
+
+### Update recipe
+
+PUT http://localhost:3000/recipes/62c777c9f16396c2cabc4310 HTTP/1.1
+Content-Type: application/json
+
+{
+   "keyWords": ["eggs", "breakfast", "easy"]
+}
+
+### Delete recipe
+
+DELETE http://localhost:3000/recipes/62c89f4408533426de52999b HTTP/1.1
+Content-Type: application/json
+
+############################################
+### Review Routes
+############################################
+
+### Get all reviews
+
+// GET http://localhost:3000/reviews  << not needed? >>
+
+### Get review(s) by user ID
+
+GET http://localhost:3000/reviews/userPosted/62b36e6e66c00dd3846d9ffe HTTP/1.1
+Content-Type: application/json
+
+### Get review(s) by rating
+
+// not being used
+
+### Get review(s) by recipe ID
+
+GET http://localhost:3000/reviews/62b23fc9461fa48b03fe0b21 HTTP/1.1
+Content-Type: application/json
+
+### Add review
+
+POST http://localhost:3000/reviews/62b23fc9461fa48b03fe0b21 HTTP/1.1
+Content-Type: application/json
+
+{
+    "review": "Ooey, gooey, delicious!",
+    "rating": "5.5"
+}
+
+### Update review
+
+POST http://localhost:3000/reviews/62cd3fd466f6c949932db220 HTTP/1.1
+Content-Type: application/json
+
+{
+    "review": "Ooey, gooey, delicious!",
+    "rating": "5.5"
+}
+
+### Delete review
+
+DELETE http://localhost:3000/reviews/62cd3fd466f6c949932db220 HTTP/1.1
+Content-Type: application/json
+
+
+
+##############################################
+### List routes
+##############################################
+
+### Get all lists
+
+GET http://localhost:3000/lists HTTP/1.1
+Content-Type: application/json
+
+### Add list
+
+POST http://localhost:3000/lists HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Walmart shopping",
+    "items": [
+        "milk",
+        "butter",
+        "cheese"
+    ],
+    "userId": "62ca34fe861a721a378d347a"
+}
+
+### Get all lists for user
+
+GET http://localhost:3000/lists/user/62ca34fe861a721a378d347a HTTP/1.1
+Content-Type: application/json
+
+### Get list by list ID
+
+GET http://localhost:3000/lists/62c7481fb3669e9048dcc176 HTTP/1.1
+Content-Type: application/json
+
+### Update list
+
+PUT http://localhost:3000/lists/62c7481fb3669e9048dcc176 HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Fruits"
+}
+
+### Delete list
+
+DELETE http://localhost:3000/lists/62cd46226ebe792a7de52c34 HTTP/1.1
+Content-Type: application/json
+
+#############################################
+### User routes
+#############################################
+
+### Get all users
+
+GET http://localhost:3000/user
+
+### Update user information
+
+
+
+### Delete a user

@@ -2,8 +2,20 @@ const routes = require('express').Router();
 const list = require('../controller/list');
 const validation = require('../validation');
 
+const authCheck = (req, res, next) => {
+    const apikey = req.get('apikey');
+    if (!req.user && apikey !== process.env.apikey) {
+        console.log('apiKey',apikey);
+      res.redirect('/auth/home');
+    } else {
+        
+      next();
+    }
+  };
+
+
 // Create a new list
-routes.post('/', validation.addNewList, list.create
+routes.post('/', authCheck, validation.addNewList, list.create
     // #swagger.tags = ['List']
     // #swagger.summary = 'Make a new shopping list'
     /* #swagger.parameters['obj'] = {
@@ -18,25 +30,25 @@ routes.post('/', validation.addNewList, list.create
 );
 
 // Retrieve all lists by user id
-routes.get('/user/:user_id', list.findByUser
+routes.get('/user/:user_id', authCheck, list.findByUser
     // #swagger.tags = ['List']
     // #swagger.summary = 'Get all lists created by user'
 );
 
 // Retrieve a single list with list id
-routes.get('/:list_id', list.findOne
+routes.get('/:list_id', authCheck, list.findOne
     // #swagger.tags = ['List']
     // #swagger.summary = 'Retrieve single list by ID'
 );
 
 // Retrive all lists in database
-routes.get('/', list.findAll
+routes.get('/', authCheck, list.findAll
     // #swagger.tags = ['List']
     // #swagger.summary = 'Get all shopping lists for everyone'
 );
 
 // Update a list with id
-routes.put('/:id', validation.updateOneList, list.update
+routes.put('/:id', authCheck, validation.updateOneList, list.update
     // #swagger.tags = ['List']
     // #swagger.summary = 'Update shopping list by list ID'
     /* #swagger.parameters['obj'] = {
@@ -51,7 +63,7 @@ routes.put('/:id', validation.updateOneList, list.update
 );
 
 // Delete a list with id
-routes.delete('/:id', list.delete
+routes.delete('/:id', authCheck, list.delete
     // #swagger.tags = ['List']
     // #swagger.summary = 'Delete shopping list by list ID'
 );

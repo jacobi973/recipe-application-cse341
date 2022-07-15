@@ -46,7 +46,7 @@ exports.findReviewByRecipe = (req, res) => {
   })
   .catch((err) => {
     res.status(500).send({
-      message: `Error retrieving reviews with recipe id of  ${recipe_id}`
+      message: `Error retrieving reviews with recipe id of  ${recipeId}`
     });
     console.log(err);
   });

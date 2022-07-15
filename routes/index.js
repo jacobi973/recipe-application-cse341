@@ -6,9 +6,12 @@ const userRoutes = require('./user-routes.js');
 
 
 const authCheck = (req, res, next) => {
-  if (!req.user) {
+  const apikey = req.get('apikey');
+  if (!req.user && apikey !== process.env.apikey) {
+      console.log('apiKey',apikey);
     res.redirect('/auth/home');
   } else {
+      
     next();
   }
 };
