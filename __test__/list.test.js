@@ -49,6 +49,7 @@ describe('lists', () => {
                 const res = await (request(app).post('/lists')
                 .set('apikey', process.env.apikey)
                 .send({
+                    "_id": "4edd40c86762e0fb12000001",
                     "title": "Kroger List",
                     "items": [
                       "peanuts",
@@ -63,6 +64,22 @@ describe('lists', () => {
             });
         });
 
+        describe('update list', () => {
+            it('edit list using list ID', async() => {
+                const res = await (request(app).put('/lists/4edd40c86762e0fb12000001'))
+                .set('apikey', process.env.apikey)
+                .send({title: 'Updated Kroger List'});
+                expect(res.statusCode).toEqual(200);
+            });
+        });
+
+        describe('delete list', () => {
+            it('delete list using list ID', async() => {
+                const res = await (request(app).delete('/lists/4edd40c86762e0fb12000001')
+                .set('apikey', process.env.apikey));
+                expect(res.statusCode).toEqual(200);
+            });
+        });
 
     });
 });

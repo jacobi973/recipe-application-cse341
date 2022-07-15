@@ -24,6 +24,7 @@ const Recipe = mongoose.model('recipe', recipe)
 
 // List schema
 const list = new mongoose.Schema({
+    _id: ObjectId,
     title: {
         type: String,
         required: true
