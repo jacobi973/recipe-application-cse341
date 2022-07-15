@@ -111,8 +111,8 @@ const updateOneReview= (req, res, next) => {
   const validationRule = {
     recipeId: 'string',
     userId: 'string',
-    review: 'required|string',
-    rating: 'required|string'
+    review: 'string',
+    rating: 'string'
   };
   validator(req.body, validationRule, {}, (err, status) => {
     if (!status) {

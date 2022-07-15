@@ -39,7 +39,7 @@ describe('lists', () => {
 
         describe('get list by list ID', () => {
             it('gets single list by list ID', async () => {
-                const res = await (request(app).get('lists/62c7481fb3669e9048dcc176').set('apikey', process.env.apikey));
+                const res = await (request(app).get('/lists/62c7481fb3669e9048dcc176').set('apikey', process.env.apikey));
                 expect(res.statusCode).toEqual(200);
             });
         });
