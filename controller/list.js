@@ -16,8 +16,7 @@ exports.create = (req, res) => {
   // Save List in the database
   list
     .save(list)
-    .then((data) => {
-      console.log(data);
+    .then(() => {
       //req.session.message = 'Your Recipe was successfully posted!';
       res.send('Your List was successfully posted!');
     })

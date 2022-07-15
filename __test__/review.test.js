@@ -52,11 +52,15 @@ describe('reviews', () => {
 
         describe('post one review', () => {
             it('post a new review for a recipe', async() => {
+                //const recipeId = ObjectId('62b25438f507e8b500d4c1c4')
                 const res = await (request(app).post('/reviews/62b25438f507e8b500d4c1c4')
+                //const res = await (request(app).post('/reviews')
                 .set('apikey', process.env.apikey)
                 .send({
+                    _id: '4edd40c86762e0fb12000002',
+                    googleId: '100552395345978742943',
                     review: 'so easy to make!',
-                    rating: 5
+                    rating: '5'
                 })
                 );
                 expect(res.statusCode).toEqual(200);
@@ -80,17 +84,17 @@ describe('reviews', () => {
         // });
 
         describe('update review', () => {
-            it('edit review using recipe ID', async() => {
-                const res = await (request(app).put('/reviews/62b23fc9461fa48b03fe0b21'))
+            it('edit review using review ID', async() => {
+                const res = await (request(app).put('/reviews/4edd40c86762e0fb12000002'))
                 .set('apikey', process.env.apikey)
-                .send({rating: 5});
+                .send({rating: '5'});
                 expect(res.statusCode).toEqual(200);
             });
         });
 
         describe('delete review', () => {
             it('delete review using review ID', async() => {
-                const res = await (request(app).delete('/reviews/62cef60df0daa11ad34cf313').set('apikey', process.env.apikey));
+                const res = await (request(app).delete('/reviews/4edd40c86762e0fb12000002').set('apikey', process.env.apikey));
                 expect(res.statusCode).toEqual(200);
             });
         });

@@ -15,7 +15,7 @@ const authCheck = (req, res, next) => {
 
   
 // Create a new recipe
-routes.post('/', authCheck,  validation.addNewRecipe, recipes.create
+routes.post('/', authCheck, validation.addNewRecipe, recipes.create
     // #swagger.tags = ['Recipes']
     // #swagger.summary = 'Add a recipe to the database'
     /* #swagger.parameters['obj'] = {

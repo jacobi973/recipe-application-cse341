@@ -42,6 +42,7 @@ describe('recipes', () => {
                 const res = await (request(app).post('/recipes')
                 .set('apikey', process.env.apikey)
                 .send({
+                    _id: '4edd40c86762e0fb12000003',
                     name: 'Scrambled Eggs',
                     ingredients: [
                         '4 large eggs',
@@ -88,7 +89,7 @@ describe('recipes', () => {
 
         describe('update recipe', () => {
             it('edit recipe using recipe ID', async() => {
-                const res = await (request(app).put('/recipes/62c777c9f16396c2cabc4310'))
+                const res = await (request(app).put('/recipes/4edd40c86762e0fb12000003'))
                 .set('apikey', process.env.apikey)
                 .send({keyWords: ['breakfast']});
                 expect(res.statusCode).toEqual(200);
@@ -97,7 +98,7 @@ describe('recipes', () => {
 
         describe('delete recipe', () => {
             it('delete recipe using recipe ID', async() => {
-                const res = await (request(app).delete('/recipes/62c89b9cc261961750369279').set('apikey', process.env.apikey));
+                const res = await (request(app).delete('/recipes/4edd40c86762e0fb12000003').set('apikey', process.env.apikey));
                 expect(res.statusCode).toEqual(200);
             });
         });

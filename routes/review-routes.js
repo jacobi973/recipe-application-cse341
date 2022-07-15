@@ -11,7 +11,7 @@ const authCheck = (req, res, next) => {
         
       next();
     }
-  };
+};
 
 // Create a new review
 routes.post(`/:recipe_id`, authCheck, validation.addNewReview, reviews.create
